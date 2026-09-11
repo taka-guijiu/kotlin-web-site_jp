@@ -6,6 +6,7 @@
 他のプログラミング言語と同様に、Kotlin では、あるコードが真と評価されるかどうかに基づいて判断を行うことができます。
 このようなコードは **条件式** と呼ばれます。また、Kotlin ではループを作成したり、ループを反復処理したりすることもできます。
 
+## Conditional expressions
 ## 条件式
 
 Kotlin では、条件式を判定するために `if` と `when` が用意されています。
@@ -158,9 +159,11 @@ fun main() {
 
 `when` を条件を表すサブジェクトと組み合わせて使用すると、コードの可読性と保守性が向上します。また、`when` 式で条件を表すサブジェクトを使用すると、Kotlin がすべての可能性を網羅しているかどうかを確認しやすくなります。一方、`when` 式で条件を表すサブジェクトを使用しない場合は、else 分岐を明示的に記述する必要があります。
 
-## 条件式の練習
+## Conditional expressions practice
+## 条件式の演習
 
 ### Exercise 1 {initial-collapse-state="collapsed" collapsible="true" id="conditional-expressions-exercise-1"}
+### 課題 1 {initial-collapse-state="collapsed" collapsible="true" id="conditional-expressions-exercise-1"}
 
 2つのサイコロを振って同じ目が出たら勝利となる、シンプルなゲームを作成してください。`if` を使って、サイコロの目が一致した場合は `You win :)` を、それ以外の場合は `You lose :(` を出力してください。
 
@@ -203,6 +206,7 @@ fun main() {
 {initial-collapse-state="collapsed" collapsible="true" collapsed-title="Example solution" id="kotlin-tour-control-flow-conditional-solution-1"}
 
 ### Exercise 2 {initial-collapse-state="collapsed" collapsible="true" id="conditional-expressions-exercise-2"}
+### 課題 2 {initial-collapse-state="collapsed" collapsible="true" id="conditional-expressions-exercise-2"}
 
 `when` 式を使用して、以下のプログラムを修正し、ゲーム機のボタンの名前を入力した際に、それに対応するアクションが表示されるようにしてください。
 
@@ -244,6 +248,7 @@ fun main() {
 ```
 {initial-collapse-state="collapsed" collapsible="true" collapsed-title="Example solution" id="kotlin-tour-control-flow-conditional-solution-2"}
 
+## Ranges
 ## 範囲
 
 ループについて説明する前に、ループで反復処理を行う対象となる範囲をどのように設定するかを理解しておくと役立ちます。
@@ -262,6 +267,7 @@ Kotlinで範囲を作成する最も一般的な方法は、`..`演算子を使�
 * `『a』..『d』` は `『a』, 『b』, 『c』, 『d』` と同等です。
 * `『z』 downTo 『s』 step 2` は `『z』, 『x』, 『v』, 『t』` と同等です。
 
+## Loops
 ## ループ（繰り返し）
 
 プログラミングにおいて最も一般的な2つのループ構造は、`for`と`while`です。`for`は、一連の値を順に処理してアクションを実行するために使用します。`while`は、特定の条件が満たされるまでアクションを継続するために使用します。
@@ -369,8 +375,9 @@ fun main() {
 Kotlin の制御フローの基本を理解したところで、次は独自の [関数](kotlin-tour-functions.md) の書き方を学びましょう。
 
 ## Loops practice {completion-point="true"}
+## ループの演習 {completion-point="true"}
 
-### Exercise 1 {initial-collapse-state="collapsed" collapsible="true" id="loops-exercise-1"}
+### 課題 1 {initial-collapse-state="collapsed" collapsible="true" id="loops-exercise-1"}
 
 8切れのピザ1枚ができるまで、ピザの切れ数を数えるプログラムがあります。このプログラムを次の2つの方法でリファクタリングしてください：
 
@@ -433,6 +440,7 @@ fun main() {
 {initial-collapse-state="collapsed" collapsible="true" collapsed-title="Example solution 2" id="kotlin-tour-control-flow-loops-exercise-1-solution-2"}
 
 ### Exercise 2 {initial-collapse-state="collapsed" collapsible="true" id="loops-exercise-2"}
+### 課題 2 {initial-collapse-state="collapsed" collapsible="true" id="loops-exercise-2"}
 
 [Fizz Buzz](https://en.wikipedia.org/wiki/Fizz_buzz)というゲームをシミュレートするプログラムを作成してください。
 あなたの課題は、1から100までの数字を順に表示し、3で割り切れる数字を「fizz」という単語に、5で割り切れる数字を「buzz」という単語に置き換えることです。
@@ -477,6 +485,7 @@ fun main() {
 {initial-collapse-state="collapsed" collapsible="true" collapsed-title="Example solution" id="kotlin-tour-control-flow-loops-solution-2"}
 
 ### Exercise 3 {initial-collapse-state="collapsed" collapsible="true" id="loops-exercise-3"}
+### 課題 3 {initial-collapse-state="collapsed" collapsible="true" id="loops-exercise-3"}
 
 単語のリストがあります。`for`と`if`を使って、文字`l`で始まる単語だけを出力してください。
 

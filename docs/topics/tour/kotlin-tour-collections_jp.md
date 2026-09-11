@@ -15,6 +15,7 @@ Kotlin has the following collections for grouping items:
 
 各コレクション型は、可変型または読み取り専用型にすることができます。
 
+## List
 ## リスト
 
 リストは、項目が追加された順に保存され、重複する項目も許可されます。
@@ -132,6 +133,7 @@ fun main() {
 ```
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3" id="kotlin-tour-list-add-remove"}
 
+## Set
 ## セット
 
 リストは順序付けられており、重複する要素を含めることができますが、セットは**順序がない**ものであり、**一意**な要素のみを格納します。
@@ -215,6 +217,7 @@ fun main() {
 ```
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3" id="kotlin-tour-set-add-remove"}
 
+## Map
 ## マップ
 
 マップは、項目をキーと値のペアとして格納します。キーを参照することで、その値にアクセスできます。
@@ -398,8 +401,10 @@ fun main() {
 基本的な型やコレクションの管理方法について理解できたところで、次はプログラムで使用できる[制御フロー](kotlin-tour-control-flow_jp.md)について見ていきましょう。
 
 ## Practice {completion-point="true"}
+## 演習 {completion-point="true"}
 
-### 練習 1 {initial-collapse-state="collapsed" collapsible="true"}
+### Exercise 1 {initial-collapse-state="collapsed" collapsible="true"}
+### 課題 1 {initial-collapse-state="collapsed" collapsible="true"}
 
 「緑」の数字のリストと「赤」の数字のリストがあります。合計でいくつの数字があるかを表示するように、コードを完成させてください。
 
@@ -424,7 +429,8 @@ fun main() {
 ```
 {initial-collapse-state="collapsed" collapsible="true" collapsed-title="Example solution" id="kotlin-tour-collections-solution-1"}
 
-### 練習 2 {initial-collapse-state="collapsed" collapsible="true"}
+### Exercise 2 {initial-collapse-state="collapsed" collapsible="true"}
+### 課題 2 {initial-collapse-state="collapsed" collapsible="true"}
 
 サーバーがサポートしているプロトコルのセット(例："HTTP", "HTTPS", "FTP")があります。ユーザーが特定のプロトコルの使用をリクエストしました。リクエストされたプロトコルがサポートされているかどうかを確認するプログラムを完成させてください（`isSupported` はブール値でなければなりません）。
 
@@ -457,7 +463,8 @@ fun main() {
 ```
 {initial-collapse-state="collapsed" collapsible="true" collapsed-title="Example solution" id="kotlin-tour-collections-solution-2"}
 
-### 練習 3 {initial-collapse-state="collapsed" collapsible="true"}
+### Exercise 3 {initial-collapse-state="collapsed" collapsible="true"}
+### 課題 3 {initial-collapse-state="collapsed" collapsible="true"}
 
 1 から 3 までの整数と、その整数を表す英語の綴りを結びつける対応関係を定義してください。この対応関係を用いて、与えられた 
 番号に対応する綴りを表示してください。

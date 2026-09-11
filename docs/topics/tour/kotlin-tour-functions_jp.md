@@ -207,9 +207,10 @@ fun main() {
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3" id="kotlin-tour-function-early-return"}
 
 ## Functions practice
-## 関数の練習
+## 関数の演習
 
 ### Exercise 1 {initial-collapse-state="collapsed" collapsible="true" id="functions-exercise-1"}
+### 課題 1 {initial-collapse-state="collapsed" collapsible="true" id="functions-exercise-1"}
 
 `circleArea` という関数を記述してください。この関数は、整数形式の円の半径をパラメータとして受け取り、その円の面積を出力します。
 
@@ -251,6 +252,7 @@ fun main() {
 {initial-collapse-state="collapsed" collapsible="true" collapsed-title="Example solution" id="kotlin-tour-functions-solution-1"}
 
 ### Exercise 2 {initial-collapse-state="collapsed" collapsible="true" id="functions-exercise-2"}
+### 課題 2 {initial-collapse-state="collapsed" collapsible="true" id="functions-exercise-2"}
 
 前の演習で作成した `circleArea` 関数を、単一式関数として書き直してください。
 
@@ -279,6 +281,7 @@ fun main() {
 {initial-collapse-state="collapsed" collapsible="true" collapsed-title="Example solution" id="kotlin-tour-functions-solution-2"}
 
 ### Exercise 3 {initial-collapse-state="collapsed" collapsible="true" id="functions-exercise-3"}
+### 課題 3 {initial-collapse-state="collapsed" collapsible="true" id="functions-exercise-3"}
 
 時間、分、秒で指定された時間間隔を秒に変換する関数があります。
 ほとんどの場合、関数の引数は1つか2つだけ渡せばよく、残りは0に設定します。
@@ -535,39 +538,43 @@ fun main() {
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3" id="kotlin-tour-lambda-standalone"}
 
 ### Trailing lambdas
+### トレイリング・ラムダ（末尾のラムダ式）
 
-As you have already seen, if a lambda expression is the only function parameter, you can drop the function parentheses `()`.
-If a lambda expression is passed as the last parameter of a function, then the expression can be written outside the
-function parentheses `()`. In both cases, this syntax is called a **trailing lambda**.
+すでにご覧になった通り、関数の引数がラムダ式のみの場合は、関数の括弧 `()` を省略することができます。
+また関数の最後の引数としてラムダ式が渡される場合、そのラムダ式は関数の括弧 `()` の外側に記述することができます。いずれの場合も、この構文は **トレーリング・ラムダ** （末尾のラムダ式）と呼ばれます。
 
-For example, the [`.fold()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.sequences/fold.html) function accepts an 
-initial value and an operation:
+たとえば、[`.fold()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.sequences/fold.html) 関数は、初期値（initial）とラムダ式（演算）を受け取ります：
 
 ```kotlin
 fun main() {
     //sampleStart
-    // The initial value is zero. 
-    // The operation sums the initial value with every item in the list cumulatively.
-    println(listOf(1, 2, 3).fold(0, { x, item -> x + item })) // 6
+    // 初期値はゼロです。 
+    // この演算では、初期値とリスト内の各要素を累積的に足し合わせます。
+    println(listOf(1, 2, 3).fold(10, { x, item -> x + item })) // 16
 
-    // Alternatively, in the form of a trailing lambda
-    println(listOf(1, 2, 3).fold(0) { x, item -> x + item })  // 6
+    // あるいは、トレイリング・ラムダ式の形で
+    println(listOf(1, 2, 3).fold(10) { x, item -> x + item })  // 16
     //sampleEnd
 }
 ```
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3" id="kotlin-tour-trailing-lambda"}
 
-For more information on lambda expressions, see [Lambda expressions and anonymous functions](lambdas.md#lambda-expressions-and-anonymous-functions).
+ラムダ式に関する詳細については、[ラムダ式と匿名関数](lambdas.md#lambda-expressions-and-anonymous-functions)を参照してください。
 
-The next step in our tour is to learn about [classes](kotlin-tour-classes.md) in Kotlin.
+このツアーの次のステップでは、Kotlinの[クラス](kotlin-tour-classes.md)について学びます。
 
 ## Lambda expressions practice {completion-point="true"}
+## ラムダ式の演習 {completion-point="true"}
 
 ### Exercise 1 {initial-collapse-state="collapsed" collapsible="true" id="lambdas-exercise-1"}
+### 課題 1 {initial-collapse-state="collapsed" collapsible="true" id="lambdas-exercise-1"}
 
-You have a list of actions supported by a web service, a common prefix for all requests, and an ID of a particular resource.
-To request an action `title` over the resource with ID: 5, you need to create the following URL: `https://example.com/book-info/5/title`.
-Use a lambda expression to create a list of URLs from the list of actions.
+Webサービスでサポートされているアクションの一覧(actions)、すべてのリクエストに共通するプレフィックス(prefix)、および特定のリソースのID(id)があります。
+IDが5のリソースに対して、例えばアクション`title`を実行するには、次のURLを作成する必要があります： 
+
+`https://example.com/book-info/5/title`.
+
+ラムダ式を使用して、アクションのリストからURLのリストを作成しなさい。
 
 |---|---|
 ```kotlin
@@ -588,15 +595,15 @@ fun main() {
     val prefix = "https://example.com/book-info"
     val id = 5
     val urls = actions.map { action -> "$prefix/$id/$action" }
-    println(urls)
+    println(urls)   // [https://example.com/book-info/5/title, https://example.com/book-info/5/year, https://example.com/book-info/5/author]
 }
 ```
 {initial-collapse-state="collapsed" collapsible="true" collapsed-title="Example solution" id="kotlin-tour-lambdas-solution-1"}
 
 ### Exercise 2 {initial-collapse-state="collapsed" collapsible="true" id="lambdas-exercise-2"}
+### 課題 2 {initial-collapse-state="collapsed" collapsible="true" id="lambdas-exercise-2"}
 
-Write a function that takes an `Int` value and an action (a function with type `() -> Unit`) which then repeats the 
-action the given number of times. Then use this function to print “Hello” 5 times.
+`Int`型の値とアクション（型が `() -> Unit` の関数）を受け取り、そのアクションを指定された回数だけ繰り返す関数を作成してください。その後、この関数を使って「Hello」を5回出力してください。
 
 |---|---|
 ```kotlin
@@ -630,9 +637,9 @@ fun main() {
 
 <list columns="2" id="tour-nav">
   <li>
-    <a as="button" href="kotlin-tour-control-flow.md" mode="outline" icon="arrow-left" icon-position="left">Previous step</a>
+    <a as="button" href="kotlin-tour-control-flow_jp.md" mode="outline" icon="arrow-left" icon-position="left">Previous step</a>
   </li>
   <li>
-    <a as="button" href="kotlin-tour-classes.md" mode="classic" icon="arrow-right" icon-position="right">Next step</a>
+    <a as="button" href="kotlin-tour-classes_jp.md" mode="classic" icon="arrow-right" icon-position="right">Next step</a>
   </li>
 </list>

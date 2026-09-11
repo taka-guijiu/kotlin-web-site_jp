@@ -1,3 +1,4 @@
+[//]: # (title: Basic types)
 [//]: # (title: 基本型)
 
 <no-index/>
@@ -89,9 +90,11 @@ fun main() {
 
 基本的な型の宣言方法を学んだところで、次は[コレクション](kotlin-tour-collections_jp.md)について学びましょう。
 
-## 練習 {completion-point="true"}
+## Practice {completion-point="true"}
+## 演習 {completion-point="true"}
 
-### 練習 {initial-collapse-state="collapsed" collapsible="true"}
+### Exercise {initial-collapse-state="collapsed" collapsible="true"}
+### 課題 {initial-collapse-state="collapsed" collapsible="true"}
 
 各変数について、正しい型を明示的に宣言してください：
 
