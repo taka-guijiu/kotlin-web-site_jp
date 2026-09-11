@@ -3,11 +3,12 @@
 <no-index/>
 
 
-Kotlin supports object-oriented programming with classes and objects. Objects are useful for storing data in your program.
-Classes allow you to declare a set of characteristics for an object. When you create objects from a class, you can save
-time and effort because you don't have to declare these characteristics every time.
+Kotlinは、クラスやオブジェクトを用いたオブジェクト指向プログラミングをサポートしています。
+オブジェクトは、プログラム内でデータを格納するのに役立ちます。
+クラスを使用すると、オブジェクトの一連の特性を定義することができます。
+クラスからオブジェクトを作成する場合、その特性を毎回宣言する必要がないため、時間と手間を節約できます。
 
-To declare a class, use the `class` keyword: 
+クラスを宣言するには、`class` キーワードを使用します： 
 
 ```kotlin
 class Customer
