@@ -1,3 +1,6 @@
+# 日本語化に挑戦中
+まずは、 \kotlin-web-site_jp\docs\topics\tour から翻訳中
+
 # Kotlin website
 [![Official project][project-badge]][project-url]
 
