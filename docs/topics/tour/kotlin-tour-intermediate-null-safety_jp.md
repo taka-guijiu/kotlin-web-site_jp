@@ -234,15 +234,14 @@ fun main() {
 ```
 {kotlin-runnable="true" id="kotlin-tour-null-safety-singleornull"}
 
-> The `singleOrNull()` function is designed to be used with collections that **don't** contain `null` values.
+> `singleOrNull()` 関数は、`null` 値を含んで**いない**コレクションで使用するように設計されています。
 >
 {style="note"}
 
-Some functions use a lambda expression to transform a collection and return `null` values if they can't
-fulfill their purpose.
+一部の関数は、ラムダ式を使用してコレクションを変換し、その目的を果たせない場合は `null` を返します。
 
-To transform a collection with a lambda expression and return the first value that isn't `null`, use the 
-[`firstNotNullOfOrNull()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/first-not-null-of-or-null.html) function. If no such value exists, the function returns a `null` value:
+ラムダ式を使用してコレクションを変換し、`null` ではない最初の値を返すには、[`firstNotNullOfOrNull()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/first-not-null-of-or-null.html) 関数を使用します。
+そのような値が存在しない場合、この関数は `null` 値を返します：
 
 ```kotlin
 fun main() {
@@ -263,58 +262,57 @@ fun main() {
 ```
 {kotlin-runnable="true" id="kotlin-tour-null-safety-firstnotnullofornull"}
 
-To use a lambda expression to process each collection item sequentially and create an accumulated value (or return a 
-`null` value if the collection is empty) use the [`reduceOrNull()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/reduce-or-null.html) function:
+ラムダ式を使用して、コレクションの各要素を順次処理し、累積値を生成する（または、コレクションが空の場合は `null` 値を返す）には、[`reduceOrNull()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/reduce-or-null.html) 関数を使用します：
 
 ```kotlin
 fun main() {
 //sampleStart
-    // Prices of items in a shopping cart
+    // ショッピングカート内の商品の価格
     val itemPrices = listOf(20, 35, 15, 40, 10)
 
-    // Calculate the total price using the reduceOrNull() function
+    // reduceOrNull() 関数を使用して合計金額を計算する
     val totalPrice = itemPrices.reduceOrNull { runningTotal, price -> runningTotal + price }
     println("Total price of items in the cart: ${totalPrice ?: "No items"}")
-    // Total price of items in the cart: 120
+    // カート内の商品の合計金額：120
 
     val emptyCart = listOf<Int>()
+    println(emptyCart)  // empytCatrはnullの配列 [] ：空のカート    （訳者加筆）
     val emptyTotalPrice = emptyCart.reduceOrNull { runningTotal, price -> runningTotal + price }
     println("Total price of items in the empty cart: ${emptyTotalPrice ?: "No items"}")
-    // Total price of items in the empty cart: No items
+    // 空のカート内の商品の合計金額：商品はありません。
 //sampleEnd
 }
 ```
 {kotlin-runnable="true" id="kotlin-tour-null-safety-reduceornull"}
 
-This example also uses the Elvis operator `?:` to return a printed statement if the function returns a `null` value.
+この例では、関数が `null` 値を返した場合に、出力文を返すために Elvis 演算子 `?:` も使用しています。
 
-> The `reduceOrNull()` function is designed to be used with collections that **don't** contain `null` values.
+> `reduceOrNull()` 関数は、`null` 値を含んで**いない**コレクションで使用するように設計されています。
 >
 {style="note"}
 
-Explore Kotlin's [standard library](https://kotlinlang.org/api/core/kotlin-stdlib/) to find more functions that you can 
-use to make your code safer.
+Kotlinの[標準ライブラリ](https://kotlinlang.org/api/core/kotlin-stdlib/)を調べて、コードをより安全にするために利用できる関数をさらに見つけてみましょう。
 
 ## Early returns and the Elvis operator
+## 初期の集計結果とエルヴィス・オペレーター
 
-In the beginner tour, you learned how to use [early returns](kotlin-tour-functions.md#early-returns-in-functions) to stop
-your function from being processed further than a certain point. You can use the Elvis operator `?:` with an early return
-to check preconditions in a function. This approach is a great way to keep your code concise because you don't need to use
-nested checks. The reduced complexity of your code also makes it easier to maintain. For example:
+初心者向けツアーでは、[early returns(関数内での処理の切上げ)](kotlin-tour-functions.md#early-returns-in-functions) を使って、関数の処理を特定のポイント以降に進まないようにする方法について学びました。
+関数内の前提条件を確認するには、エルビス演算子 `?:` と早期リターンを組み合わせて使用できます。この方法なら、ネストしたチェックを行う必要がないため、コードを簡潔に保つのに最適です。
+コードの複雑さが軽減されることで、メンテナンスも容易になります。例えば：
 
 ```kotlin
 data class User(
     val id: Int,
     val name: String,
-    // List of friend user IDs
+    // この人がもつ友人のユーザーIDを記した一覧
     val friends: List<Int>
 )
 
-// Function to get the number of friends for a user
+// ユーザーの友達の数を取得する関数
 fun getNumberOfFriends(users: Map<Int, User>, userId: Int): Int {
-    // Retrieves the user or return -1 if not found
+    // ユーザーを取得します。見つからない場合は -1 を返します。
     val user = users[userId] ?: return -1
-    // Returns the number of friends
+    // 友達の数を返す
     return user.friends.size
 }
 
@@ -327,6 +325,7 @@ fun main() {
     // Creates a map of users
     val users = mapOf(1 to user1, 2 to user2, 3 to user3)
 
+    // usersの中から指定したIDの人に何人の友達がいるかを表示。指定したIDなusersの中に居ない場合は-1を表示
     println(getNumberOfFriends(users, 1))
     // 2
     println(getNumberOfFriends(users, 2))
@@ -337,62 +336,60 @@ fun main() {
 ```
 {kotlin-runnable="true" id="kotlin-tour-null-safety-early-return"}
 
-In this example:
+この例では：
 
-* There is a `User` data class that has properties for the user's `id`, `name` and list of friends.
-* The `getNumberOfFriends()` function:
-  * Accepts a map of `User` instances and a user ID as an integer.
-  * Accesses the value of the map of `User` instances with the provided user ID.
-  * Uses an Elvis operator to return the function early with the value of `-1` if the map value is a `null` value.
-  * Assigns the value found from the map to the `user` variable.
-  * Returns the number of friends in the user's friends list by using the `size` property.
-* The `main()` function:
-  * Creates three `User` instances. 
-  * Creates a map of these `User` instances and assigns them to the `users` variable. 
-  * Calls the `getNumberOfFriends()` function on the `users` variable with values `1` and `2` that returns two friends for `"Alice"` and one friend for `"Bob"`.
-  * Calls the `getNumberOfFriends()` function on the `users` variable with value `4`, which triggers an early return with a value of `-1`.
+* `User` というデータクラスがあり、ユーザーの `id`、`name`、および友達のリストを表すプロパティを持っています。
+* `getNumberOfFriends()` 関数について：
+  * `User`インスタンスのマップと、整数型のユーザー ID を受け取ります。
+  * 指定されたユーザー ID を持つ `User` インスタンスのマップの値を取得します。
+  * Elvis演算子を使用し、マップの値が`null`の場合、関数を早期に終了して値`-1`を返します。
+  * マップから取得した値を `user` 変数に代入します。
+  * `size` プロパティを使用して、ユーザーのフレンドリストにあるフレンドの数を返します。
+* `main()`関数について:
+  * `User`のインスタンスを3つ作成します。
+  * これらの `User` インスタンスのマップを作成し、それを `users` 変数に代入します。
+  * `users` 変数に対して、値 `1` と `2` を引数として `getNumberOfFriends()` 関数を呼び出し、`「Alice」` には 2 人の友達、`「Bob」` には 1 人の友達が返されます。
+  * `users` 変数に対して `getNumberOfFriends()` 関数を呼び出し、値として `4` を指定すると、値 `-1` を返して早期に処理が終了します。
 
-You may notice that the code could be more concise without an early return. However, this approach needs multiple safe 
-calls because the `users[userId]` might return a `null` value, making the code slightly harder to read:
+早期リターンを省けば、コードがもっと簡潔になることに気づくかもしれません。
+ただし、`users[userId]` が `null` を返す可能性があるため、このアプローチでは複数の `safe` 呼び出しが必要となり、コードの可読性が若干低下してしまいます：
 
 ```kotlin
 fun getNumberOfFriends(users: Map<Int, User>, userId: Int): Int {
-    // Retrieve the user or return -1 if not found
+    // ユーザーを取得する。見つからない場合は-1を返す
     return users[userId]?.friends?.size ?: -1
 }
 ```
 {validate="false"}
 
-Although this example checks only one condition with the Elvis operator, you can add multiple checks to cover any critical
-error paths. Early returns with the Elvis operator prevent your program from doing unnecessary work and make your code 
-safer by stopping as soon as a `null` value or invalid case is detected.
+この例では、Elvis演算子を使って1つの条件のみをチェックしていますが、重大なエラー経路をすべて網羅するために、複数のチェックを追加することも可能です。
+Elvis演算子による早期評価により、`null`値や無効なケースが検出されるとすぐに処理を停止するため、プログラムが不要な処理を行うのを防ぎ、コードの安全性を高めることができます。
 
-For more information about how you can use `return` in your code, see [Returns and jumps](returns.md).
+コード内で `return` をどのように使用できるかについての詳細は、[戻り値とジャンプ](returns.md) を参照してください。
 
 ## Practice {completion-point="true"}
+## 演習 {completion-point=「true」}
 
-### Exercise 1 {initial-collapse-state="collapsed" collapsible="true" id="null-safety-exercise-1"}
+### 課題 1 {initial-collapse-state="collapsed" collapsible="true" id="null-safety-exercise-1"}
 
-You are developing a notification system for an app where users can enable or disable different types of notifications.
-Complete the `getNotificationPreferences()` function so that:
+あなたは、ユーザーがさまざまな種類の通知を有効または無効にできるアプリ向けの通知システムを開発しています。
+`getNotificationPreferences()` 関数を、以下の条件を満たすように完成させてください：
 
-1. The `validUser` variable uses the `as?` operator to check if `user` is an instance of the `User` class. If it isn't, return an empty list.
-2. The `userName` variable uses the Elvis `?:` operator to ensure that the user's name defaults to `"Guest"` if it is `null`.
-3. The final return statement uses the `.takeIf()` function to include email and SMS notification preferences only if they are enabled.
-4. The `main()` function runs successfully and prints the expected output.
+1. `validUser` 変数は、`as?` 演算子を使用して、`user` が `User` クラスのインスタンスであるかどうかを確認します。そうでない場合は、空のリストを返します。
+2. `userName` 変数では、Elvis の `?:` 演算子を使用しており、ユーザー名が `null` の場合、デフォルトで `「Guest」` となるようにしています。
+3. 最後のreturn文では、`.takeIf()`関数を使用して、メールおよびSMS通知の設定が有効になっている場合にのみ、それらを含めるようにしています。
+4. `main()` 関数は正常に実行され、期待通りの出力が表示されます。
 
-> The [`takeIf()` function](scope-functions.md#takeif-and-takeunless) returns the original value if the given condition is true,
-> otherwise it returns `null`. For example:
+> [`takeIf()`関数](scope-functions.md#takeif-and-takeunless)は、指定された条件が真の場合、元の値を返し、そうでない場合は`null`を返します。例えば：
 >
 > ```kotlin
 > fun main() {
->     // The user is logged in
+ｃ>     // ユーザーがログイン済みです
 >     val userIsLoggedIn = true
->     // The user has an active session
+>     // ユーザーのセッションが有効です
 >     val hasSession = true
 > 
->     // Gives access to the dashboard if the user is logged in
->     // and has an active session
+>     // ユーザーがログインしており、セッションが有効な場合にダッシュボードへのアクセスを許可する
 >     val canAccessDashboard = userIsLoggedIn.takeIf { hasSession }
 > 
 >     println(canAccessDashboard ?: "Access denied")
@@ -442,6 +439,7 @@ fun getNotificationPreferences(user: Any, emailEnabled: Boolean, smsEnabled: Boo
         "Email Notifications enabled for $userName".takeIf { emailEnabled },
         "SMS Notifications enabled for $userName".takeIf { smsEnabled }
     )
+    // 訳者注：listOfNotNullは、takeIfでその後の{}ブロック内の条件を評価し、trueなら.takeIfの前の文字列をリストに加える。
 }
 
 fun main() {
@@ -455,15 +453,21 @@ fun main() {
     // [SMS Notifications enabled for Guest]
     println(getNotificationPreferences(invalidUser, emailEnabled = true, smsEnabled = true))
     // []
+    
+    // 理解を深めるため訳者追記（Bobがemailとsmsを持っている場合）
+    val user3 = User("Bob")
+    println(getNotificationPreferences(user3, emailEnabled = true, smsEnabled = true))
+    // [Email Notifications enabled for Bob, SMS Notifications enabled for Bob]
+    // 追記終わり
+
 }
 ```
 {initial-collapse-state="collapsed" collapsible="true" collapsed-title="Example solution" id="kotlin-tour-null-safety-solution-1"}
 
-### Exercise 2 {initial-collapse-state="collapsed" collapsible="true" id="null-safety-exercise-2"}
+### 課題 2 {initial-collapse-state="collapsed" collapsible="true" id="null-safety-exercise-2"}
 
-You are working on a subscription-based streaming service where users can have multiple subscriptions, but **only one 
-can be active at a time**. Complete the `getActiveSubscription()` function so that it uses the `singleOrNull()` function
-with a predicate to return a `null` value if there is more than one active subscription:
+現在、ユーザーが複数のサブスクリプションを契約できるサブスクリプション型のストリーミングサービスの開発に取り組んでいますが、**一度に有効にできるのは1つだけ**です。
+`getActiveSubscription()` 関数を完成させ、アクティブなサブスクリプションが 2 つ以上ある場合に `null` 値を返すよう、述語を指定して `singleOrNull()` 関数を使用するようにしてください：
 
 |--|--|
 
@@ -499,14 +503,20 @@ data class Subscription(val name: String, val isActive: Boolean)
 
 fun getActiveSubscription(subscriptions: List<Subscription>): Subscription? {
     return subscriptions.singleOrNull { subscription -> subscription.isActive }
+    // singleOrnullは、subscriptionで構成されたsubrictionsのリストの中から
+    // ひとつひとつのsubscriptionを抜き出し、isActiveが真であるものを拾い出し数え、
+    // 真の数がひとつの時、そのsubscriptionを返す。真の数がひとつ以外ならnullを返す。
+
 }
 
 fun main() {
+    // premium Planのみtrueの時
     val userWithPremiumPlan = listOf(
         Subscription("Basic Plan", false),
         Subscription("Premium Plan", true)
     )
 
+    // basicPlanとpremiumPlanの両方がtrueの時
     val userWithConflictingPlans = listOf(
         Subscription("Basic Plan", true),
         Subscription("Premium Plan", true)
@@ -549,11 +559,11 @@ fun main() {
 ```
 {initial-collapse-state="collapsed" collapsible="true" collapsed-title="Example solution 2" id="kotlin-tour-null-safety-solution-2-2"}
 
-### Exercise 3 {initial-collapse-state="collapsed" collapsible="true" id="null-safety-exercise-3"}
+### 課題 3 {initial-collapse-state="collapsed" collapsible="true" id="null-safety-exercise-3"}
 
-You are working on a social media platform where users have usernames and account statuses. You want to see the list of 
-currently active usernames. Complete the `getActiveUsernames()` function so that the [`mapNotNull()` function](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/map-not-null.html)
-has a predicate that returns the username if it is active or a `null` value if it isn't:
+あなたは、ユーザーがユーザー名とアカウントの状態を持つソーシャルメディアプラットフォームの開発に取り組んでいます。
+現在アクティブなユーザー名のリストを確認したい。
+`getActiveUsernames()` 関数を完成させ、[`mapNotNull()` 関数](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/map-not-null.html) の述語が、ユーザー名がアクティブな場合はそのユーザー名を、そうでない場合は `null` 値を返すようにしてください：
 
 |--|--|
 
@@ -629,19 +639,19 @@ fun main() {
 ```
 {initial-collapse-state="collapsed" collapsible="true" collapsed-title="Example solution 2" id="kotlin-tour-null-safety-solution-3-2"}
 
-### Exercise 4 {initial-collapse-state="collapsed" collapsible="true" id="null-safety-exercise-4"}
+### 課題 4 {initial-collapse-state="collapsed" collapsible="true" id="null-safety-exercise-4"}
 
-You are working on an inventory management system for an e-commerce platform. Before processing a sale, you need to check
-if the requested quantity of a product is valid based on the available stock.
+あなたは、あるEコマースプラットフォーム向けの在庫管理システムの開発に取り組んでいます。
+販売処理を行う前に、商品の注文数量が在庫状況に基づいて妥当であるかを確認する必要があります。
 
-Complete the `validateStock()` function so that it uses early returns and the Elvis operator (where applicable) to check if:
+`validateStock()` 関数を完成させ、早期リターンと（適切な場合は）エルヴィス演算子を使用して、以下の条件を満たしているかどうかを確認するようにしてください：
 
-* The `requested` variable is `null`.
-* The `available` variable is `null`.
-* The `requested` variable is a negative value.
-* The amount in the `requested` variable is higher than in the `available` variable.
+* `requested` 変数が `null` 
+* `available` 変数は `null` 
+* `requested` 変数の値が負の値
+* `requested` 変数の値が `available` 変数の値よりも大きい
 
-In all of the above cases, the function must return early with the value of `-1`.
+上記のいずれの場合においても、関数は `-1` を返して早期に終了しなければなりません。
 
 |--|--|
 
