@@ -3,33 +3,35 @@
 <no-index/>
 
 
-In this chapter, you'll learn how to use receivers with another type of function, lambda expressions, and how they
-can help you create a domain-specific language.
+この章では、レシーバーを別の種類の関数であるラムダ式と組み合わせて使用する方法、およびそれらがドメイン固有言語（DSL）の作成にどのように役立つかを学びます。
 
 ## Lambda expressions with receiver
+## レシーバーを持つラムダ式
 
-In the beginner tour, you learned how to use [lambda expressions](kotlin-tour-functions.md#lambda-expressions). Lambda expressions can also have a receiver. 
-In this case, lambda expressions can access any member functions or properties of the receiver without having
-to explicitly specify the receiver each time. Without these additional references, your code is easier to read and maintain.
+初心者向けツアーでは、[ラムダ式](kotlin-tour-functions_jp.md#lambda-expressions)の使い方を学びました。ラムダ式には、レシーバーを指定することもできます。
+この場合、ラムダ式は、その都度レシーバーを明示的に指定することなく、レシーバーの任意のメンバ関数やプロパティにアクセスすることができます。
+こうした余分な参照がなければ、コードは読みやすく、メンテナンスも容易になります。
 
-> Lambda expressions with receiver are also known as function literals with receiver.
+> レシーバーを持つラムダ式は、レシーバーを持つ関数リテラルとも呼ばれます。
 >
 {style="tip"}
 
-The syntax for a lambda expression with receiver is different when you define the function type. First, write the receiver
-that you want to extend. Next, put a `.` and then complete the rest of your function type definition. For example:
+レシーバーを持つラムダ式の構文は、関数型を定義する場合とは異なります。
+まず、拡張したいレシーバーを記述します。
+次に、`.` を入力し、関数型の定義の残りの部分を完成させてください。
+例えば：
 
 ```kotlin
 MutableList<Int>.() -> Unit
 ```
 
-This function type has:
+この関数型には、以下のものがあります：
 
-* `MutableList<Int>` as the receiver.
-* No function parameters within the parentheses `()`.
-* No return value: `Unit`.
+* レシーバーとして `MutableList<Int>`。
+* 括弧 `()` 内に関数の引数を含めないでください。
+* 戻り値なし：`Unit`。
 
-Consider this example that draws shapes on a canvas:
+キャンバス上に図形を描く次の例を考えてみましょう：
 
 ```kotlin
 class Canvas {
@@ -37,13 +39,15 @@ class Canvas {
     fun drawSquare() = println("🟥 Drawing a square")
 }
 
-// Lambda expression with receiver definition
+// レシーバー定義を含むラムダ式
 fun render(block: Canvas.() -> Unit): Canvas {
     val canvas = Canvas()
-    // Use the lambda expression with receiver
+    // レシーバー付きのラムダ式を使用する
     canvas.block()
     return canvas
 }
+// 訳者注）
+// render関数のblockはCanvasクラスの関数を受け取る
 
 fun main() {
     render {
@@ -56,24 +60,21 @@ fun main() {
 ```
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3" id="kotlin-intermediate-tour-lambda-expression-with-receiver"}
 
-In this example:
+この例では：
+* `Canvas` クラスには、円や四角形を描くことをシミュレートする 2 つの関数があります。
+* `render()` 関数は `block` パラメータを受け取り、`Canvas` クラスのインスタンスを返します。
+* `block` パラメータは、レシーバーを持つラムダ式であり、そのレシーバーは `Canvas` クラスです。
+* `render()` 関数は、`Canvas` クラスのインスタンスを作成し、その `canvas` インスタンスをレシーバーとして、`block()` ラムダ式を呼び出します。
+* `main()` 関数は、`block` パラメータに渡されるラムダ式を引数として `render()` 関数を呼び出します。
+* `render()` 関数に渡されたラムダ式内部で、プログラムは `Canvas` クラスのインスタンスに対して `drawCircle()` および `drawSquare()` 関数を呼び出します。
 
-* The `Canvas` class has two functions that simulate drawing a circle or a square.
-* The `render()` function takes a `block` parameter and returns an instance of the `Canvas` class.
-* The `block` parameter is a lambda expression with receiver, where the `Canvas` class is the receiver.
-* The `render()` function creates an instance of the `Canvas` class and calls the `block()` lambda expression on the `canvas` instance, using it as the receiver.
-* The `main()` function calls the `render()` function with a lambda expression, which is passed to the `block` parameter.
-* Inside the lambda passed to the `render()` function, the program calls the `drawCircle()` and `drawSquare()` functions on an instance of the `Canvas` class.
+* `render()` 関数に渡されたラムダ式内部で、プログラムは `Canvas` クラスのインスタンスに対して `drawCircle()` および `drawSquare()` 関数を呼び出します。
 
-  Because the `drawCircle()` and `drawSquare()` functions are called in the lambda expression with receiver, they can be called
-  directly as if they are inside the `Canvas` class.
+レシーバーを持つラムダ式は、ドメイン固有言語（DSL）を作成したい場合に役立ちます。
+レシーバーを明示的に参照することなく、そのメンバー関数やプロパティにアクセスできるため、コードが簡潔になります。
 
-Lambda expressions with receiver are helpful when you want to create a domain-specific language (DSL). Since you have
-access to the receiver's member functions and properties without explicitly referencing the receiver, your code 
-becomes leaner.
-
-To demonstrate this, consider an example that configures items in a menu. Let's begin with a `MenuItem` class and a 
-`Menu` class that contains a function to add items to the menu called `item()`, as well as a list of all menu items `items`:
+これを説明するために、メニュー内の項目を設定する例を考えてみましょう。
+まずは、`MenuItem` クラスと、メニューに項目を追加する `item()` という関数、およびすべてのメニュー項目の一覧 `items` を含む `Menu` クラスから始めましょう：
 
 ```kotlin
 class MenuItem(val name: String)
@@ -87,20 +88,19 @@ class Menu(val name: String) {
 }
 ```
 
-Let's use a lambda expression with receiver passed as a function parameter (`init`) to the `menu()` function that builds 
-a menu as a starting point:
+まずは、メニューを構築する `menu()` 関数に、関数パラメータ（`init`）としてレシーバーが渡されるラムダ式を、出発点として使ってみましょう：
 
 ```kotlin
 fun menu(name: String, init: Menu.() -> Unit): Menu {
-    // Creates an instance of the Menu class
+    // Menuクラスのインスタンスを作成します
     val menu = Menu(name)
-    // Calls the lambda expression with receiver init() on the class instance
+    // クラスインスタンスに対して、レシーバー init() を持つラムダ式を呼び出します
     menu.init()
     return menu
 }
 ```
 
-Now you can use the DSL to configure a menu and create a `printMenu()` function to print the menu structure to the console:
+これで、DSL を使ってメニューを設定し、メニュー構造をコンソールに出力する `printMenu()` 関数を作成できるようになりました：
 
 ```kotlin
 class MenuItem(val name: String)
@@ -146,26 +146,22 @@ fun main() {
 ```
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3" id="kotlin-intermediate-tour-lambda-expression-with-receiver-dsl"}
 
-As you can see, using a lambda expression with receiver greatly simplifies the code needed to create your menu. Lambda 
-expressions are not only useful for setup and creation but also for configuration. They are commonly used in building 
-DSLs for APIs, UI frameworks, and configuration builders to produce streamlined code, allowing you to focus more easily 
-on the underlying code structure and logic.
+ご覧のとおり、レシーバーを伴うラムダ式を使用することで、メニューを作成するために必要なコードが大幅に簡略化されます。
+ラムダ式は、セットアップや生成だけでなく、設定にも役立ちます。
+これらは、API、UIフレームワーク、設定ビルダー向けのDSLを構築する際に広く利用されており、コードを簡潔にすることで、基盤となるコードの構造やロジックに集中しやすくなります。
 
-Kotlin's ecosystem has many examples of this design pattern, such as in the [`buildList()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/build-list.html)
-and [`buildString()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/build-string.html) functions from the 
-standard library.
+Kotlinのエコシステムには、このデザインパターンの例が数多く見られます。例えば、[`buildList()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/build-list.html) や [`buildString()`] (https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/build-string.html) 関数など、このデザインパターンの例が数多く見られます。
 
-> Lambda expressions with receivers can be combined with **type-safe builders** in Kotlin to make DSLs that detect any problems
-> with types at compile time rather than at runtime. To learn more, see [Type-safe builders](type-safe-builders.md).
+> Kotlinでは、レシーバーを持つラムダ式を**型安全なビルダー**と組み合わせることで、実行時ではなくコンパイル時に型の問題を検出できるDSLを作成できます。
+> 詳細については、[型安全なビルダー](type-safe-builders.md)を参照してください。
 >
 {style="tip"}
 
-## Practice {completion-point="true"}
+## 演習 {completion-point="true"}
 
-### Exercise 1 {initial-collapse-state="collapsed" collapsible="true" id="lambda-receivers-exercise-1"}
+### 課題 1 {initial-collapse-state="collapsed" collapsible="true" id="lambda-receivers-exercise-1"}
 
-You have a `fetchData()` function that accepts a lambda expression with receiver. Update the lambda expression to use 
-the `append()` function so that the output of your code is: `Data received - Processed`.
+`fetchData()` という関数があり、この関数はレシーバー付きのラムダ式を受け取ります。コードの出力が `Data received - Processed` になるよう、ラムダ式を修正して `append()` 関数を使用するようにしてください。
 
 |---|---|
 ```kotlin
@@ -200,17 +196,18 @@ fun main() {
 ```
 {initial-collapse-state="collapsed" collapsible="true" collapsed-title="Example solution" id="kotlin-tour-lambda-receivers-solution-1"}
 
-### Exercise 2 {initial-collapse-state="collapsed" collapsible="true" id="lambda-receivers-exercise-2"}
+### 課題 2 {initial-collapse-state="collapsed" collapsible="true" id="lambda-receivers-exercise-2"}
 
-You have a `Button` class and `ButtonEvent` and `Position` data classes. Write some code that triggers the `onEvent()`
-member function of the `Button` class to trigger a double-click event. Your code should print `"Double click!"`.
+`Button` クラスと、`ButtonEvent` および `Position` というデータクラスがあります。
+ダブルクリックイベントを発生させるために、`Button`クラスの`onEvent()`メンバ関数を呼び出すコードを書いてください。
+このコードを実行すると、`「Double click!」`と表示されるはずです。
 
 ```kotlin
 class Button {
     fun onEvent(action: ButtonEvent.() -> Unit) {
-        // Simulate a double-click event (not a right-click)
+        // ダブルクリックイベントをシミュレートする（右クリックではない）
         val event = ButtonEvent(isRightClick = false, amount = 2, position = Position(100, 200))
-        event.action() // Trigger the event callback
+        event.action() // イベントのコールバックをトリガーする
     }
 }
 
@@ -240,7 +237,7 @@ fun main() {
 ```kotlin
 class Button {
     fun onEvent(action: ButtonEvent.() -> Unit) {
-        // Simulate a double-click event (not a right-click)
+        // ダブルクリックイベントをシミュレートする（右クリックではない）
         val event = ButtonEvent(isRightClick = false, amount = 2, position = Position(100, 200))
         event.action() // Trigger the event callback
     }
@@ -260,20 +257,36 @@ data class Position(
 fun main() {
     val button = Button()
     
-    button.onEvent {
+    button.onEvent {    
         if (!isRightClick && amount == 2) {
             println("Double click!")
             // Double click!
+            println("on $position")
         }
+        
     }
+    // 訳者注）
+    // Buttonクラスのインスタンスbuttonを通して、
+    // ButtonEventクラスに
+    // 新たな関数(機能)
+    //   {    
+    //       if (!isRightClick && amount == 2) {
+    //           println("Double click!")
+    //       }
+    //   } を
+    // 追加する。
+    // この機能は、ButtonクラスのonEvent()関数の引数actionに渡される。
+    // 引数actionは、ButtonEventクラスの()->Unitの型を持った関数である。
+    // event.action()で実行される。
+
 }
 ```
 {initial-collapse-state="collapsed" collapsible="true" collapsed-title="Example solution" id="kotlin-tour-lambda-receivers-solution-2"}
 
-### Exercise 3 {initial-collapse-state="collapsed" collapsible="true" id="lambda-receivers-exercise-3"}
+### 課題 3 {initial-collapse-state="collapsed" collapsible="true" id="lambda-receivers-exercise-3"}
 
-Write a function that creates a copy of a list of integers where every element is incremented by 1. Use the provided 
-function skeleton that extends `List<Int>` with an `incremented` function.
+各要素を1ずつ増やした整数のリストのコピーを作成する関数を作成してください。
+`List<Int>` に `incremented` 関数を追加する、提供されている関数の骨格を使用してください。
 
 ```kotlin
 fun List<Int>.incremented(): List<Int> {
@@ -314,9 +327,9 @@ fun main() {
 
 <list columns="2" id="tour-nav">
   <li>
-    <a as="button" href="kotlin-tour-intermediate-scope-functions.md" mode="outline" icon="arrow-left" icon-position="left">Previous step</a>
+    <a as="button" href="kotlin-tour-intermediate-scope-functions_jp.md" mode="outline" icon="arrow-left" icon-position="left">Previous step</a>
   </li>
   <li>
-    <a as="button" href="kotlin-tour-intermediate-classes-interfaces.md" mode="classic" icon="arrow-right" icon-position="right">Next step</a>
+    <a as="button" href="kotlin-tour-intermediate-classes-interfaces_jp.md" mode="classic" icon="arrow-right" icon-position="right">Next step</a>
   </li>
 </list>
