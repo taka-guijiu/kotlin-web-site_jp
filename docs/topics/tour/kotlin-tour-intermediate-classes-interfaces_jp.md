@@ -3,9 +3,9 @@
 <no-index/>
 
 
-In the beginner tour, you learned how to use classes and data classes to store data and maintain a collection of characteristics
-that can be shared in your code. Eventually, you will want to create a hierarchy to efficiently share code within your 
-projects. This chapter explains the options Kotlin provides for sharing code and how they can make your code safer and easier to maintain.
+初心者向けツアーでは、クラスやデータクラスを使用してデータを格納し、コード内で共有できる一連の特性を管理する方法を学びました。
+最終的には、プロジェクト内でコードを効率的に共有するために、階層構造を構築したくなるでしょう。
+この章では、Kotlinが提供するコード共有の機能と、それらがどのようにしてコードの安全性と保守性を高めるかについて解説します。
 
 ## Class inheritance
 
