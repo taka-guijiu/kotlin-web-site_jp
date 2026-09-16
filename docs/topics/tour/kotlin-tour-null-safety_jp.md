@@ -3,20 +3,19 @@
 <no-index/>
 
 
-In Kotlin, it's possible to have a `null` value. Kotlin uses `null` values when something is missing or not yet set.
-You've already seen an example of Kotlin returning a `null` value in the [Collections](kotlin-tour-collections.md#kotlin-tour-map-no-key)
-chapter when you tried to access a key-value pair with a key that doesn't exist in the map. Although it's useful to use
-`null` values in this way, you might run into problems if your code isn't prepared to handle them. 
+Kotlin では、`null` 値を指定することが可能です。
+Kotlinでは、何かが欠けている場合やまだ設定されていない場合に、`null`値が使用されます。
+[コレクション](kotlin-tour-collections.md#kotlin-tour-map-no-key)の章で、マップに存在しないキーを持つキーと値のペアにアクセスしようとした際、Kotlinが`null`値を返す例をすでにご覧になったはずです。
+このように `null` 値を使用するのは便利ですが、コードが `null` 値の処理に対応していない場合、問題が発生する可能性があります。
 
-To help prevent issues with `null` values in your programs, Kotlin has null safety in place. Null safety detects
-potential problems with `null` values at compile time, rather than at run time.
+プログラムにおける `null` 値に関連する問題を未然に防ぐため、Kotlin には null 安全機能が備わっています。null 安全機能は、実行時ではなくコンパイル時に `null` 値に関連する潜在的な問題を検出します。
 
-Null safety is a combination of features that allow you to:
+ヌルセーフティとは、以下のことが可能になる一連の機能のことです：
 
-* Explicitly declare when `null` values are allowed in your program.
-* Check for `null` values.
-* Use safe calls to properties or functions that may contain `null` values.
-* Declare actions to take if `null` values are detected.
+* プログラム内で `null` 値が許容される場合は、それを明示的に宣言してください。
+* `null` 値がないか確認してください。
+* `null` 値を含む可能性があるプロパティや関数への呼び出しでは、安全な呼び出しを使用してください。
+* `null` 値が検出された場合の対処方法を明記する。
 
 ## Nullable types
 
@@ -204,9 +203,9 @@ our intermediate tour:
 
 <list columns="2" id="tour-nav">
   <li>
-    <a as="button" href="kotlin-tour-classes.md" mode="outline" icon="arrow-left" icon-position="left">Previous step</a>
+    <a as="button" href="kotlin-tour-classes_jp.md" mode="outline" icon="arrow-left" icon-position="left">Previous step</a>
   </li>
   <li>
-    <a as="button" href="kotlin-tour-intermediate-extension-functions.md" mode="classic" icon="arrow-right" icon-position="right">Start intermediate Kotlin tour</a>
+    <a as="button" href="kotlin-tour-intermediate-extension-functions_jp.md" mode="classic" icon="arrow-right" icon-position="right">Start intermediate Kotlin tour</a>
   </li>
 </list>
