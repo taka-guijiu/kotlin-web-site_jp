@@ -3,39 +3,38 @@
 <no-index/>
 
 
-In this chapter, you'll build on your understanding of extension functions to learn how to use scope functions to 
-write more idiomatic code.
+この章では、拡張関数についての理解を深め、スコープ関数を使ってよりイディオムに沿ったコードを書く方法を学びます。
 
 ## Scope functions
+## スコープ関数
 
-In programming, a scope is the area in which your variable or object is recognized. The most commonly referred to scopes
-are the global scope and the local scope:
+プログラミングにおいて、スコープとは、変数やオブジェクトが認識される範囲のことです。最もよく言及されるスコープは、グローバルスコープとローカルスコープです：
 
-* **Global scope** – a variable or object that is accessible from anywhere in the program.
-* **Local scope** – a variable or object that is only accessible within the block or function where it is defined.
+* **グローバルスコープ** – プログラム内のどこからでもアクセスできる変数またはオブジェクト。
+* **ローカルスコープ** – 定義されたブロックまたは関数内でのみアクセス可能な変数またはオブジェクト。
 
-In Kotlin, there are also scope functions that allow you to create a temporary scope around an object and execute some code.
+Kotlin には、オブジェクトの周囲に一時的なスコープを作成し、そこでコードを実行できるスコープ関数もあります。
 
-Scope functions make your code more concise because you don't have to refer to the name of your object within the temporary
-scope. Depending on the scope function, you can access the object either by referencing it via the keyword `this` or using it as an
-argument via the keyword `it`.
+スコープ関数を使えば、一時的なスコープ内ではオブジェクト名を参照する必要がなくなるため、コードをより簡潔にすることができます。
+スコープの機能に応じて、キーワード `this` を使ってオブジェクトを参照するか、キーワード `it` を使って引数として指定することで、そのオブジェクトにアクセスできます。
 
-Kotlin has five scope functions in total: `let`, `apply`, `run`, `also`, and `with`.
+Kotlin には、`let`、`apply`、`run`、`also`、`with` の計 5 つのスコープ関数があります。
 
-Each scope function takes a lambda expression and returns either the object or the result of the lambda expression. In 
-this tour, we explain each scope function and how to use it.
+Each scope function takes a lambda expression and returns either the object or the result of the lambda expression. 
+このツアーでは、各スコープ関数の機能と使い方を解説します。
 
-> You can also watch the [Back to the Stdlib: Making the Most of Kotlin's Standard Library](https://youtu.be/DdvgvSHrN9g?feature=shared&t=1511)
-> talk on scope functions by Sebastian Aigner, Kotlin developer advocate.
+> You can also watch the [Back to the Stdlib: Making the Most of Kotlin's Standard Library](https://youtu.be/DdvgvSHrN9g?feature=shared&t=1511) talk on scope functions by Sebastian Aigner, Kotlin developer advocate.
 > 
+> また、Kotlinの開発者アドボケイト（支持者）であるSebastian Aigner氏による、スコープ関数に関する講演「[Back to the Stdlib: Making the Most of Kotlin's Standard Library](https://youtu.be/DdvgvSHrN9g?feature=shared&t=1511)」もご覧いただけます。
+>
+
 {style="tip"}
 
 ### Let
 
-Use the `let` scope function when you want to perform null checks in your code and later perform further actions
-with the returned object.
+コード内でnullチェックを行い、その後、返されたオブジェクトを使ってさらなる処理を実行したい場合は、`let`スコープ関数を使用してください。
 
-Consider the example:
+次の例を考えてみましょう：
 
 ```kotlin
 fun sendNotification(recipientAddress: String): String {
@@ -54,21 +53,22 @@ fun main() {
 ```
 {validate = "false"}
 
-The example has two functions:
-* `sendNotification()`, which has a function parameter `recipientAddress` and returns a string.
-* `getNextAddress()`, which has no function parameters and returns a string.
+この例には2つの関数があります：
+* `sendNotification()`：関数パラメータ `recipientAddress` を受け取り、文字列を返す。
+* `getNextAddress()`：引数を持たず、文字列を返す関数です。
 
-The example creates a variable `address` that has a nullable `String` type. But this becomes a problem when you call
-the `sendNotification()` function because this function doesn't expect that `address` could be a `null` value.
-The compiler reports an error as a result: 
+この例では、Null許容の `String` 型を持つ変数 `address` を宣言しています。
+しかし、`sendNotification()` 関数を呼び出すと問題が発生します。この関数は、`address` が `null` になる可能性を想定していないからです。
+その結果、コンパイラはエラーを報告します： 
 
 ```text
 Argument type mismatch: actual type is 'String?', but 'String' was expected.
+引数の型が一致しません：実際の型は「String?」ですが、期待されていた型は「String」です。
 ```
 
-From the beginner tour, you already know that you can perform a null check with an if condition or use the [Elvis operator `?:`](kotlin-tour-null-safety.md#use-elvis-operator). 
-But what if you want to use the returned object later in your code? You could achieve this with an if condition **and** an 
-else branch:
+初心者向けツアーで学んだ通り、if 条件式を使って null チェックを行うか、[エルビス演算子 `?:`](kotlin-tour-null-safety.md#use-elvis-operator) を使用することができます。
+しかし、返されたオブジェクトをコードの後半で利用したい場合はどうすればよいでしょうか？
+これは、if条件 **および** else分岐を使用することで実現できます：
 
 ```kotlin
 fun sendNotification(recipientAddress: String): String {
@@ -91,7 +91,7 @@ fun main() {
 ```
 {kotlin-runnable="true" id="kotlin-tour-scope-function-let-non-null-if"}
 
-However, a more concise approach is to use the `let` scope function:
+ただし、より簡潔な方法は、`let`スコープ関数を使用することです：
 
 ```kotlin
 fun sendNotification(recipientAddress: String): String {
@@ -114,21 +114,20 @@ fun main() {
 ```
 {kotlin-runnable="true" id="kotlin-tour-scope-function-let-non-null"}
 
-The example:
-* Creates variables called `address` and `confirm`.
-* Uses a safe call for the `let` scope function on the `address` variable.
-* Creates a temporary scope within the `let` scope function.
-* Passes the `sendNotification()` function as a lambda expression into the `let` scope function.
-* Refers to the `address` variable via `it`, using the temporary scope.
-* Assigns the result to the `confirm` variable.
+この例では：
+* `address` および `confirm` という名前の変数を宣言します。
+* `address` 変数に対して、`let` スコープ関数用のセーフコールを使用します。
+* `let`スコープの関数内に一時的なスコープを作成します。
+* `sendNotification()` 関数をラムダ式として `let` スコープの関数に渡します。
+* 一時スコープを使用して、`it` を通じて `address` 変数を参照しています。
+* 結果を `confirm` 変数に代入します。
 
-With this approach, your code can handle the `address` variable potentially being a `null` value, and you can use the 
-`confirm` variable later in your code.
+この方法を用いれば、コード内で `address` 変数が `null` 値になる可能性に対処でき、後でコード内で `confirm` 変数を使用できるようになります。
 
 ### Apply
 
-Use the `apply` scope function to initialize objects, like a class instance, at the time of creation rather than later
-on in your code. This approach makes your code easier to read and manage.
+`apply` スコープ関数を使用すると、コードの後の段階ではなく、生成時にクラスインスタンスなどのオブジェクトを初期化できます。
+このアプローチにより、コードの可読性と管理しやすさが向上します。
 
 Consider the example:
 
@@ -157,15 +156,12 @@ fun main() {
 ```
 {kotlin-runnable="true" id="kotlin-tour-scope-function-apply-before"}
 
-The example has a `Client` class that contains one property called `token` and three member functions: `connect()`,
-`authenticate()`, and `getData()`.
+この例には、`token` というプロパティを1つ持ち、`connect()`、`authenticate()`、`getData()` の3つのメンバ関数を持つ `Client` クラスが含まれています。
 
-The example creates `client` as an instance of the `Client` class before initializing its `token` property and calling its
-member functions in the `main()` function.
+この例では、`main()`関数内で、`Client`クラスのインスタンスとして`client`を作成し、その`token`プロパティを初期化した後、メンバ関数を呼び出しています。
 
-Although this example is compact, in the real world, it can be a while before you can configure and use the class instance
-(and its member functions) after you've created it. However, if you use the `apply` scope function you can create, configure and
-use member functions on your class instance all in the same place in your code:
+この例は簡潔ですが、実際の現場では、クラスインスタンス（およびそのメンバ関数）を作成してから、設定して使用できるようになるまでには、しばらく時間がかかることがあります。
+ただし、`apply` スコープ関数を使用すれば、コード内の同じ場所で、クラスのインスタンスに対するメンバ関数の作成、設定、および使用をすべて行うことができます：
 
 ```kotlin
 class Client() {
@@ -187,30 +183,28 @@ val client = Client().apply {
 }
 
 fun main() {
-    client.getData()
+    val result: String = client.getData()
     // getting data!
 }
 //sampleEnd
 ```
 {kotlin-runnable="true" id="kotlin-tour-scope-function-apply-after"}
 
-The example:
+この例では:
 
-* Creates `client` as an instance of the `Client` class.
-* Uses the `apply` scope function on the `client` instance.
-* Creates a temporary scope within the `apply` scope function so that you don't have to explicitly refer to the `client` instance when accessing its properties or functions.
-* Passes a lambda expression to the `apply` scope function that updates the `token` property and calls the `connect()` and `authenticate()` functions.
-* Calls the `getData()` member function on the `client` instance in the `main()` function.
+* `Client` クラスのインスタンスとして `client` を作成します。
+* `client` インスタンスに対して `apply` スコープ関数を適用します。
+* `apply` スコープ関数内に一時的なスコープを作成するため、`client` インスタンスのプロパティや関数にアクセスする際に、明示的に `client` を参照する必要がなくなります。
+* `apply` スコープ関数にラムダ式を渡して、`token` プロパティを更新し、`connect()` および `authenticate()` 関数を呼び出します。
+* `main()` 関数内で、`client` インスタンスの `getData()` メンバ関数を呼び出します。
 
-As you can see, this strategy is convenient when you are working with large pieces of code.
+ご覧の通り、この手法は、大規模なコードを扱う際に便利です。
 
 ### Run
 
-Similar to `apply`, you can use the `run` scope function to initialize an object, but it's better to use `run` 
-to initialize an object at a specific moment in your code **and** immediately compute a result.
+`apply`と同様に、`run`スコープ関数を使ってオブジェクトを初期化することもできますが、コード内の特定の時点でオブジェクトを初期化し、**かつ**即座に結果を計算したい場合には、`run`を使用する方が適しています。
 
-Let's continue the previous example for the `apply` function, but this time, you want the `connect()` and
-`authenticate()` functions to be grouped so that they are called on every request.
+前回の `apply` 関数の例を続けてみましょう。ただし今回は、`connect()` 関数と `authenticate()` 関数をグループ化し、すべてのリクエストで呼び出されるようにします。
 
 For example:
 
@@ -244,29 +238,28 @@ fun main() {
 ```
 {kotlin-runnable="true" id="kotlin-tour-scope-function-run"}
 
-The example:
+この例では:
 
-* Creates `client` as an instance of the `Client` class.
-* Uses the `apply` scope function on the `client` instance.
-* Creates a temporary scope within the `apply` scope function so that you don't have to explicitly refer to the `client` instance when accessing its properties or functions.
-* Passes a lambda expression to the `apply` scope function that updates the `token` property.
+* `Client` クラスのインスタンスとして `client` を作成します。
+* `client` インスタンスに対して `apply` スコープ関数を適用します。
+* `apply` スコープ関数内に一時的なスコープを作成するため、`client` インスタンスのプロパティや関数にアクセスする際に、明示的に `client` を参照する必要がなくなります。
+* `token` プロパティを更新するラムダ式を、`apply` スコープ関数に渡します。
 
-The `main()` function:
+`main()`関数にて:
 
-* Creates a `result` variable with type `String`.
-* Uses the `run` scope function on the `client` instance.
-* Creates a temporary scope within the `run` scope function so that you don't have to explicitly refer to the `client` instance when accessing its properties or functions.
-* Passes a lambda expression to the `run` scope function that calls the `connect()`, `authenticate()`, and `getData()` functions.
-* Assigns the result to the `result` variable.
+* 型が `String` の `result` 変数を作成します。
+* `client` インスタンスに対して `run` スコープ関数を使用します。
+* `run` スコープ関数内に一時的なスコープを作成するため、`client` インスタンスのプロパティや関数にアクセスする際に、明示的に `client` を参照する必要がなくなります。
+* `connect()`、`authenticate()`、および `getData()` 関数を呼び出すラムダ式を、`run` スコープ関数に渡します。
+* 結果を `result` 変数に代入します。
 
-Now you can use the returned result further in your code.
+これで、返された結果をコード内でさらに活用できるようになりました。
 
 ### Also
 
-Use the `also` scope function to complete an additional action with an object and then return the object to continue 
-using it in your code, like writing a log.
+`also` スコープ関数を使用すると、オブジェクトに対して追加の処理（ログ出力など）を実行した後、そのオブジェクトを返して、コード内で引き続き使用することができます。
 
-Consider the example:
+次の例を考えてみましょう：
 
 ```kotlin
 fun main() {
@@ -282,20 +275,20 @@ fun main() {
 ```
 {kotlin-runnable="true" id="kotlin-tour-scope-function-also-before"}
 
-The example:
+この例では:
 
-* Creates the `medals` variable that contains a list of strings.
-* Creates the `reversedLongUpperCaseMedals` variable that has the `List<String>` type.
-* Uses the `.map()` extension function on the `medals` variable.
-* Passes a lambda expression to the `.map()` function that refers to `medals` via the `it` keyword and calls the `.uppercase()` extension function on it.
-* Uses the `.filter()` extension function on the `medals` variable.
-* Passes a lambda expression as a predicate to the `.filter()` function that refers to `medals` via the `it` keyword and checks if the item in the list has more than 4 characters.
-* Uses the `.reversed()` extension function on the `medals` variable.
-* Assigns the result to the `reversedLongUpperCaseMedals` variable.
-* Prints the list contained in the `reversedLongUpperCaseMedals` variable.
+* 文字列のリストを含む `medals` 変数を作成します。
+* `List<String>` 型の `reversedLongUpperCaseMedals` 変数を作成します。
+* `medals` 変数に対して `.map()` 拡張関数を適用します。
+* `.map()` 関数にラムダ式を渡します。このラムダ式は、`it` キーワードを介して `medals` を参照し、それに対して `.uppercase()` 拡張関数を呼び出します。
+* `medals`変数に対して`.filter()`拡張関数を適用します。
+* `.filter()` 関数に、`it` キーワードを介して `medals` を参照し、リスト内の項目が 4 文字以上であるかどうかを確認するラムダ式を述語として渡します。
+* `medals` 変数に対して `.reversed()` 拡張関数を適用します。
+* 結果を `reversedLongUpperCaseMedals` 変数に代入します。
+* `reversedLongUpperCaseMedals` 変数に含まれるリストを出力します。
 
-It would be useful to add some logging in between the function calls to see what is happening to the `medals` variable.
-The `also` function helps with that:
+関数の呼び出しの間にログを出力するようにすると、`medals`変数がどのように変化しているかを確認するのに役立つでしょう。
+その点で、`also`関数が役立ちます：
 
 ```kotlin
 fun main() {
@@ -315,23 +308,22 @@ fun main() {
 ```
 {kotlin-runnable="true" id="kotlin-tour-scope-function-also-after"}
 
-Now the example:
+それでは、例を見てみましょう:
 
-* Uses the `also` scope function on the `medals` variable.
-* Creates a temporary scope within the `also` scope function so that you don't have to explicitly refer to the `medals` variable when using it as a function parameter.
-* Passes a lambda expression to the `also` scope function that calls the `println()` function using the `medals` variable as a function parameter via the `it` keyword.
+* `medals` 変数に対して `also` スコープ関数を使用します。
+* `also` スコープ関数内に一時的なスコープを作成するため、関数の引数として `medals` 変数を使用する際に、明示的にその変数を参照する必要がなくなります。
+* `it` キーワードを介して、`medals` 変数を関数引数として `println()` 関数を呼び出すラムダ式を、`also` スコープ関数に渡します。
 
-Since the `also` function returns the object, it is useful for not only logging but debugging, chaining
-multiple operations, and performing other side effect operations that don't affect the main flow of your code.
+`also` 関数はオブジェクトを返すため、ログ出力だけでなく、デバッグや複数の操作の連鎖、さらにはコードのメインフローに影響を与えないその他の副作用を伴う操作を行う際にも役立ちます。
 
 ### With
 
-Unlike the other scope functions, `with` is not an extension function, so the syntax is different. You pass the receiver
-object to `with` as an argument. 
+他のスコープ関数とは異なり、`with`は拡張関数ではないため、構文が異なります。
+レシーバーオブジェクトを引数として `with` に渡します。
 
-Use the `with` scope function when you want to call multiple functions on an object.
+オブジェクトに対して複数の関数を呼び出したい場合は、`with`スコープ関数を使用します。
 
-Consider this example:
+次の例を考えてみましょう：
 
 ```kotlin
 class Canvas {
@@ -357,13 +349,13 @@ fun main() {
 ```
 {kotlin-runnable="true" id="kotlin-tour-scope-function-with-before"}
 
-The example creates a `Canvas` class that has three member functions: `rect()`, `circ()`, and `text()`. Each of these member
-functions prints a statement constructed from the function parameters that you provide.
+この例では、`rect()`、`circ()`、`text()` の 3 つのメンバ関数を持つ `Canvas` クラスを作成します。
+これらのメンバー関数はそれぞれ、指定された関数引数から構成された文を出力します。
 
-The example creates `mainMonitorPrimaryBufferBackedCanvas` as an instance of the `Canvas` class before calling a sequence
-of member functions on the instance with different function parameters.
+この例では、`Canvas` クラスのインスタンスとして `mainMonitorPrimaryBufferBackedCanvas` を作成し、そのインスタンスに対して、異なる関数引数を用いて一連のメンバ関数を呼び出しています。
 
-You can see that this code is hard to read. If you use the `with` function, the code is streamlined:
+このコードは読みづらいことがお分かりいただけるでしょう。
+`with` 関数を使用すると、コードが簡潔になります：
 
 ```kotlin
 class Canvas {
@@ -392,39 +384,40 @@ fun main() {
 ```
 {kotlin-runnable="true" id="kotlin-tour-scope-function-with-after"}
 
-This example:
-* Uses the `with` scope function with the `mainMonitorSecondaryBufferBackedCanvas` instance as the receiver.
-* Creates a temporary scope within the `with` scope function so that you don't have to explicitly refer to the `mainMonitorSecondaryBufferBackedCanvas` instance when calling its member functions.
-* Passes a lambda expression to the `with` scope function that calls a sequence of member functions with different function parameters.
+この例では:
+* `mainMonitorSecondaryBufferBackedCanvas` インスタンスをレシーバーとして、`with` スコープ関数を使用します。
+* `with`スコープ関数内に一時的なスコープを作成するため、`mainMonitorSecondaryBufferBackedCanvas`インスタンスのメンバ関数を呼び出す際に、そのインスタンスを明示的に参照する必要がなくなります。
+* 異なる関数引数を持つ一連のメンバ関数を呼び出すラムダ式を、`with`スコープ関数に渡します。
 
-Now that this code is much easier to read, you are less likely to make mistakes.
+このコードがずっと読みやすくなったので、ミスを犯す可能性も低くなりました。
 
 ## Use case overview
+## ユースケースの概要
 
-This section has covered the different scope functions available in Kotlin and their main use cases for making your code
-more idiomatic. You can use this table as a quick reference. It's important to note that you don't need a complete understanding
-of how these functions work in order to use them in your code.
+このセクションでは、Kotlinで利用できるさまざまなスコープ関数と、コードをよりイディオム的なもの（よりKotlinらしい）にするための主な活用例について解説しました。
+ この表を手引きとしてご利用ください。
+ これらの関数がどのように動作するかを完全に理解していなくても、コード内でそれらを使用することは可能であるという点に留意してください。
 
-| Function | Access to `x` via | Return value  | Use case                                                                                     |
+| 機能     | `x` へのアクセス   | Return value  | ユースケース                                                                                  |
 |----------|-------------------|---------------|----------------------------------------------------------------------------------------------|
-| `let`    | `it`              | Lambda result | Perform null checks in your code and later perform further actions with the returned object. |
-| `apply`  | `this`            | `x`           | Initialize objects at the time of creation.                                                  |
-| `run`    | `this`            | Lambda result | Initialize objects at the time of creation **AND** compute a result.                         |
-| `also`   | `it`              | `x`           | Complete additional actions before returning the object.                                     |
-| `with`   | `this`            | Lambda result | Call multiple functions on an object.                                                        |
+| `let`    | `it`              | ラムダ式の結果 | コード内でNULLチェックを行い、その後、返されたオブジェクトに対してさらなる処理を実行する。           |
+| `apply`  | `this`            | `x`           | オブジェクトは作成時に初期化する。                                                              |
+| `run`    | `this`            | ラムダ式の結果 | オブジェクトを生成時に初期化し、**かつ**結果を計算する。                                          |
+| `also`   | `it`              | `x`           | オブジェクトを返す前に、追加の処理をすべて完了させる。                                            |
+| `with`   | `this`            | ラムダ式の結果 | オブジェクトに対して複数の関数を呼び出す。                                                       |
 
-For more information about scope functions, see [Scope functions](scope-functions.md).
+スコープ関数に関する詳細については、[スコープ関数](scope-functions.md)を参照してください。
 
-## Practice {completion-point="true"}
+## 演習 {completion-point="true"}
 
-### Exercise 1 {initial-collapse-state="collapsed" collapsible="true" id="scope-functions-exercise-1"}
+### 課題 1 {initial-collapse-state="collapsed" collapsible="true" id="scope-functions-exercise-1"}
 
-Rewrite the `.getPriceInEuros()` function as a single-expression function that uses safe call operators `?.` and the `let` scope function.
+`.getPriceInEuros()` 関数を、安全な呼び出し演算子 `?.` と `let` のスコープ機能を使用した単一式関数として書き直してください。
 
 <deflist collapsible="true">
     <def title="Hint">
-        Use safe call operators <code>?.</code> to safely access the <code>priceInDollars</code> property from the <code>getProductInfo()</code>
-        function. Then, use the <code>let</code> scope function to convert the value of <code>priceInDollars</code> into euros.
+        <code>?.</code> といったセーフコール演算子を使用して、<code>getProductInfo()</code> 関数から <code>priceInDollars</code> プロパティに安全にアクセスします。
+        その後、<code>let</code> スコープ関数を使用して、<code>priceInDollars</code> の値をユーロに変換します。
     </def>
 </deflist>
 
@@ -495,10 +488,10 @@ fun main() {
 ```
 {initial-collapse-state="collapsed" collapsible="true" collapsed-title="Example solution" id="kotlin-tour-scope-functions-solution-1"}
 
-### Exercise 2 {initial-collapse-state="collapsed" collapsible="true" id="scope-functions-exercise-2"}
+### 課題 2 {initial-collapse-state="collapsed" collapsible="true" id="scope-functions-exercise-2"}
 
-You have an `updateEmail()` function that updates the email address of a user. Use the `apply` scope function
-to update the email address and then the `also` scope function to print a log message: `Updating email for user with ID: ${it.id}`.
+ユーザーのメールアドレスを更新する `updateEmail()` 関数があります。
+`apply` スコープ関数を使用してメールアドレスを更新し、続いて `also` スコープ関数を使用して「ID: ${it.id} のユーザーのメールアドレスを更新中」というログメッセージを出力します。
 
 |---|---|
 ```kotlin
@@ -540,9 +533,9 @@ fun main() {
 
 <list columns="2" id="tour-nav">
   <li>
-    <a as="button" href="kotlin-tour-intermediate-extension-functions.md" mode="outline" icon="arrow-left" icon-position="left">Previous step</a>
+    <a as="button" href="kotlin-tour-intermediate-extension-functions_jp.md" mode="outline" icon="arrow-left" icon-position="left">Previous step</a>
   </li>
   <li>
-    <a as="button" href="kotlin-tour-intermediate-lambdas-receiver.md" mode="classic" icon="arrow-right" icon-position="right">Next step</a>
+    <a as="button" href="kotlin-tour-intermediate-lambdas-receiver_jp.md" mode="classic" icon="arrow-right" icon-position="right">Next step</a>
   </li>
 </list>
