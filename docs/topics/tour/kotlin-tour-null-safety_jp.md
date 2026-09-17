@@ -19,10 +19,10 @@ Kotlinでは、何かが欠けている場合やまだ設定されていない�
 
 ## Nullable types
 
-Kotlin supports nullable types which allows the possibility for the declared type to have `null` values. By default, a type
-is **not** allowed to accept `null` values. Nullable types are declared by explicitly adding `?` after the type declaration.
+Kotlin はヌル許容型をサポートしており、宣言された型が `null` 値を持つことが可能になります。デフォルトでは、型が `null` 値を受け入れることは**許可されていません**。
+Null許容型は、型宣言の後に明示的に `?` を追加することで宣言されます。
 
-For example:
+例えば：
 
 ```kotlin
 fun main() {
@@ -38,7 +38,7 @@ fun main() {
     // This is OK
     nullable = null
 
-    // By default, null values aren't accepted
+    // デフォルトでは、null値は受け入れられません
     var inferredNonNull = "The compiler assumes non-nullable"
 
     // Throws a compiler error
@@ -55,15 +55,15 @@ fun main() {
 ```
 {kotlin-runnable="true" validate="false" kotlin-min-compiler-version="1.3" id="kotlin-tour-nullable-type"}
 
-> `length` is a property of the [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/) class that 
-> contains the number of characters within a string.
+> `length` は、文字列に含まれる文字数を表す [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/) クラスのプロパティです。
 >
 {style="tip"}
 
 ## Check for null values
+## ヌル値の有無を確認する
 
-You can check for the presence of `null` values within conditional expressions. In the following example, the `describeString()`
-function has an `if` statement that checks whether `maybeString` is **not** `null` and if its `length` is greater than zero:
+条件式の中で `null` 値が含まれているかどうかを確認することができます。
+次の例では、`describeString()` 関数には、`maybeString` が `null` **ではない**かどうか、およびその `length` が 0 より大きいかどうかを確認する `if` 文が含まれています。
 
 ```kotlin
 fun describeString(maybeString: String?): String {
@@ -83,12 +83,13 @@ fun main() {
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3" id="kotlin-tour-check-nulls"}
 
 ## Use safe calls
+## 安全な呼び出しの使用
 
-To safely access properties of an object that might contain a `null` value, use the safe call operator `?.`. The safe call
-operator returns `null` if either the object or one of its accessed properties is `null`. This is useful if you want to avoid the presence of `null`
-values triggering errors in your code.
+`null` 値を含む可能性があるオブジェクトのプロパティに安全にアクセスするには、セーフコール演算子 `?.` を使用します。
+safe call 演算子は、オブジェクトまたはそのアクセスされたプロパティのいずれかが `null` の場合、`null` を返します。
+これは、コード内で `null` 値が存在することでエラーが発生するのを避けたい場合に役立ちます。
 
-In the following example, the `lengthString()` function uses a safe call to return either the length of the string or `null`:
+次の例では、`lengthString()` 関数はセーフコールを使用して、文字列の長さか `null` のいずれかを返します：
 
 ```kotlin
 fun lengthString(maybeString: String?): Int? = maybeString?.length
@@ -101,8 +102,8 @@ fun main() {
 ```
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3" id="kotlin-tour-safe-call-property"}
 
-> Safe calls can be chained so that if any property of an object contains a `null` value, then `null` is returned without 
-> an error being thrown. For example:
+> セーフコールは連鎖させることができるため、オブジェクトのいずれかのプロパティが `null` 値を含む場合、エラーをスローすることなく `null` が返されます。
+> 例えば：
 > 
 > ```kotlin
 >   person.company?.address?.country
@@ -110,11 +111,11 @@ fun main() {
 >
 {style="tip"}
 
-The safe call operator can also be used to safely call an extension or member function. In this case, a null check is 
-performed before the function is called. If the check detects a `null` value, then the call is skipped and `null` is returned.
+safe call 演算子は、拡張関数やメンバ関数を安全に呼び出すためにも使用できます。
+この場合、関数が呼び出される前にヌルチェックが行われます。
+チェックの結果、`null` 値が検出された場合、その呼び出しはスキップされ、`null` が返されます。
 
-In the following example, `nullString` is `null` so the invocation of [`.uppercase()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/uppercase.html)
-is skipped and `null` is returned:
+次の例では、`nullString` は `null` であるため、[`.uppercase()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/uppercase.html) の呼び出しはスキップされ、`null` が返されます：
 
 ```kotlin
 fun main() {
@@ -126,14 +127,15 @@ fun main() {
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3" id="kotlin-tour-safe-call-function"}
 
 ## Use Elvis operator
+## Elvis演算子の使用
 
-You can provide a default value to return if a `null` value is detected by using the **Elvis operator** `?:`.
+**Elvis演算子** `?:` を使用すると、`null` 値が検出された場合に返すデフォルト値を指定できます。
 
-Write on the left-hand side of the Elvis operator what should be checked for a `null` value.
-Write on the right-hand side of the Elvis operator what should be returned if a `null` value is detected.
+Elvis演算子の左側に、`null`値かどうかを確認すべきものを記述してください。
+Elvis演算子の右側に、`null`値が検出された場合に何を返すかを記述してください。
 
-In the following example, `nullString` is `null` so the safe call to access the `length` property returns a `null` value.
-As a result, the Elvis operator returns `0`:
+次の例では、`nullString` は `null` であるため、`length` プロパティにアクセスするためのセーフコールは `null` 値を返します。
+その結果、Elvis演算子は `0` を返します：
 
 ```kotlin
 fun main() {
@@ -144,15 +146,15 @@ fun main() {
 ```
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3" id="kotlin-tour-elvis-operator"}
 
-For more information about null safety in Kotlin, see [Null safety](null-safety.md).
+Kotlin のヌルセーフティに関する詳細については、[Null safety](null-safety.md) を参照してください。
 
-## Practice {completion-point="true"}
+## 演習 {completion-point="true"}
 
-### Exercise {initial-collapse-state="collapsed" collapsible="true"}
+### 課題 {initial-collapse-state="collapsed" collapsible="true"}
 
-You have the `employeeById` function that gives you access to a database of employees of a company. Unfortunately, this 
-function returns a value of the `Employee?` type, so the result can be `null`. Your goal is to write a function that 
-returns the salary of an employee when their `id` is provided, or `0` if the employee is missing from the database.
+`employeeById`という関数があり、これを使えば、ある会社の従業員データベースにアクセスできます。
+残念ながら、この関数は `Employee?` 型の値を返すため、結果が `null` になる可能性があります。
+この課題の目的は、従業員の `id` が指定された場合にその従業員の給与を返し、データベースにその従業員が存在しない場合は `0` を返す関数を作成することです。
 
 |---|---|
 ```kotlin
@@ -195,9 +197,9 @@ fun main() {
 {initial-collapse-state="collapsed" collapsible="true" collapsed-title="Example solution" id="kotlin-tour-null-safety-solution"}
 
 ## What's next?
+## 次は何？
 
-Congratulations! Now that you have completed the beginner tour, take your understanding of Kotlin to the next level with
-our intermediate tour:
+おめでとうございます！初心者向けツアーを完了しましたので、次は中級者向けツアーでKotlinの理解をさらに深めましょう：
 
 <seealso></seealso>
 

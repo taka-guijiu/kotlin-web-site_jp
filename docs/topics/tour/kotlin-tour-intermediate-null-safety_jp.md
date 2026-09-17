@@ -699,9 +699,9 @@ fun main() {
 
 <list columns="2" id="tour-nav">
   <li>
-    <a as="button" href="kotlin-tour-intermediate-properties_md.md" mode="outline" icon="arrow-left" icon-position="left">Previous step</a>
+    <a as="button" href="kotlin-tour-intermediate-properties_jp.md" mode="outline" icon="arrow-left" icon-position="left">Previous step</a>
   </li>
   <li>
-    <a as="button" href="kotlin-tour-intermediate-libraries-and-apis_md.md" mode="classic" icon="arrow-right" icon-position="right">Next step</a>
+    <a as="button" href="kotlin-tour-intermediate-libraries-and-apis_jp.md" mode="classic" icon="arrow-right" icon-position="right">Next step</a>
   </li>
 </list>
