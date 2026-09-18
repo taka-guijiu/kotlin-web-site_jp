@@ -347,6 +347,7 @@ fun main() {
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3" id="kotlin-tour-lambda-variable"}
 
 ラムダ式は一見すると理解しにくい場合があるので、詳しく見ていきましょう。ラムダ式は中括弧 `{}` で囲んで記述します。
+訳者注）基本的な関数、単一式、ラムダ式についてまとめ：[関数の色々な記述法](関数の色々な記述法.md)
 
 ラムダ式の中では、次のように記述します：
 
@@ -524,8 +525,7 @@ fun main() {
 ### Invoke separately
 ### 個別に呼び出す
 
-Lambda expressions can be invoked on their own by adding parentheses `()` after the curly braces `{}` and including
-any parameters within the parentheses:
+ラムダ式は、中括弧 `{}` の後に丸括弧 `()` を付け、その中にパラメータを指定することで、単独で呼び出すことができます：
 
 ```kotlin
 fun main() {

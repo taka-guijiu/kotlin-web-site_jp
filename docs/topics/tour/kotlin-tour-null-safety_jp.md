@@ -26,31 +26,31 @@ Null許容型は、型宣言の後に明示的に `?` を追加することで�
 
 ```kotlin
 fun main() {
-    // neverNull has String type
-    var neverNull: String = "This can't be null"
+    // この場合のneverNull の型は String です
+    var neverNull: String = "これはnullであってはなりません"
 
-    // Throws a compiler error
+    // コンパイルエラーが発生する
     neverNull = null
 
-    // nullable has nullable String type
-    var nullable: String? = "You can keep a null here"
+    // この場合のnullable には null 許容の String 型をもつ
+    var nullable: String? = "ここではnullのままにしておいても構いません"
 
-    // This is OK
+    // これで大丈夫です
     nullable = null
 
     // デフォルトでは、null値は受け入れられません
-    var inferredNonNull = "The compiler assumes non-nullable"
+    var inferredNonNull = "コンパイラは、null 不可であると想定します"
 
-    // Throws a compiler error
+    // コンパイルエラーが発生する
     inferredNonNull = null
 
-    // notNull doesn't accept null values
+    // notNull は null 値を受け付けません
     fun strLength(notNull: String): Int {                 
         return notNull.length
     }
 
     println(strLength(neverNull)) // 18
-    println(strLength(nullable))  // Throws a compiler error
+    println(strLength(nullable))  // コンパイルエラーが発生する
 }
 ```
 {kotlin-runnable="true" validate="false" kotlin-min-compiler-version="1.3" id="kotlin-tour-nullable-type"}
