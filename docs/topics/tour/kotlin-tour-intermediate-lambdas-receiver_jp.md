@@ -68,7 +68,7 @@ fun main() {
 * `main()` 関数は、`block` パラメータに渡されるラムダ式を引数として `render()` 関数を呼び出します。
 * `render()` 関数に渡されたラムダ式内部で、プログラムは `Canvas` クラスのインスタンスに対して `drawCircle()` および `drawSquare()` 関数を呼び出します。
 
-* `render()` 関数に渡されたラムダ式内部で、プログラムは `Canvas` クラスのインスタンスに対して `drawCircle()` および `drawSquare()` 関数を呼び出します。
+`drawCircle()` および `drawSquare()` 関数は、ラムダ式内でレシーバーを指定して呼び出されているため、あたかも `Canvas` クラス内に存在するかのよう直接呼び出すことができます。
 
 レシーバーを持つラムダ式は、ドメイン固有言語（DSL）を作成したい場合に役立ちます。
 レシーバーを明示的に参照することなく、そのメンバー関数やプロパティにアクセスできるため、コードが簡潔になります。
@@ -259,11 +259,9 @@ fun main() {
     
     button.onEvent {    
         if (!isRightClick && amount == 2) {
-            println("Double click!")
-            // Double click!
-            println("on $position")
-        }
-        
+            println("Double click!")    // Double click!
+            println("on $position")     //  
+        }        
     }
     // 訳者注）
     // Buttonクラスのインスタンスbuttonを通して、
@@ -278,7 +276,6 @@ fun main() {
     // この機能は、ButtonクラスのonEvent()関数の引数actionに渡される。
     // 引数actionは、ButtonEventクラスの()->Unitの型を持った関数である。
     // event.action()で実行される。
-
 }
 ```
 {initial-collapse-state="collapsed" collapsible="true" collapsed-title="Example solution" id="kotlin-tour-lambda-receivers-solution-2"}
@@ -299,8 +296,7 @@ fun List<Int>.incremented(): List<Int> {
 fun main() {
     val originalList = listOf(1, 2, 3)
     val newList = originalList.incremented()
-    println(newList)
-    // [2, 3, 4]
+    println(newList)    // [2, 3, 4]
 }
 ```
 {validate="false" kotlin-runnable="true" kotlin-min-compiler-version="1.3" id="kotlin-tour-lambda-receivers-exercise-3"}

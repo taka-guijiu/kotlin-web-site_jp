@@ -20,12 +20,11 @@ Kotlin には、オブジェクトの周囲に一時的なスコープを作成�
 
 Kotlin には、`let`、`apply`、`run`、`also`、`with` の計 5 つのスコープ関数があります。
 
-Each scope function takes a lambda expression and returns either the object or the result of the lambda expression. 
+各スコープ関数はラムダ式を受け取り、そのラムダ式のオブジェクトまたは結果を返します。
 このツアーでは、各スコープ関数の機能と使い方を解説します。
 
-> You can also watch the [Back to the Stdlib: Making the Most of Kotlin's Standard Library](https://youtu.be/DdvgvSHrN9g?feature=shared&t=1511) talk on scope functions by Sebastian Aigner, Kotlin developer advocate.
 > 
-> また、Kotlinの開発者アドボケイト（支持者）であるSebastian Aigner氏による、スコープ関数に関する講演「[Back to the Stdlib: Making the Most of Kotlin's Standard Library](https://youtu.be/DdvgvSHrN9g?feature=shared&t=1511)」もご覧いただけます。
+> また、Kotlinの開発者アドボケイト（支持者）であるSebastian Aigner氏による、スコープ関数に関する講演「[Back to the Stdlib: Making the Most of Kotlin's Standard Library](https://youtu.be/DdvgvSHrN9g?feature=shared&t=1511)」(YouTube)もご覧いただけます。
 >
 
 {style="tip"}
@@ -63,7 +62,7 @@ fun main() {
 
 ```text
 Argument type mismatch: actual type is 'String?', but 'String' was expected.
-引数の型が一致しません：実際の型は「String?」ですが、期待されていた型は「String」です。
+（引数の型が一致しません：実際の型は「String?」ですが、期待されていた型は「String」です。）
 ```
 
 初心者向けツアーで学んだ通り、if 条件式を使って null チェックを行うか、[エルビス演算子 `?:`](kotlin-tour-null-safety.md#use-elvis-operator) を使用することができます。
@@ -202,7 +201,7 @@ fun main() {
 
 ### Run
 
-`apply`と同様に、`run`スコープ関数を使ってオブジェクトを初期化することもできますが、コード内の特定の時点でオブジェクトを初期化し、**かつ**即座に結果を計算したい場合には、`run`を使用する方が適しています。
+`apply`と同様に、`run`スコープ関数を使ってオブジェクトを初期化することもできますが、コード内の特定の時点でオブジェクトを初期化し、**かつ**即座に結果を得たい場合には、`run`を使用する方が適しています。
 
 前回の `apply` 関数の例を続けてみましょう。ただし今回は、`connect()` 関数と `authenticate()` 関数をグループ化し、すべてのリクエストで呼び出されるようにします。
 
