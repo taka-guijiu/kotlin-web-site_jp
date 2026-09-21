@@ -1,5 +1,6 @@
 # 日本語化に挑戦中
 まずは、 \kotlin-web-site_jp\docs\topics\tour から翻訳中
+tourは一通り翻訳済。これから索引を作るつもり。(2026/0921)
 
 # Kotlin website
 [![Official project][project-badge]][project-url]
