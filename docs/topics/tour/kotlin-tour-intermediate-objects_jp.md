@@ -7,31 +7,32 @@
 この知識を活用すれば、プロジェクト全体にわたる行動を効率的に管理できるようになります。
 
 ## Object declarations
+## オブジェクトの宣言
 
-In Kotlin, you can use **object declarations** to declare a class with a single instance. In a sense, you declare the 
-class and create the single instance _at the same time_. Object declarations are useful when you want to create a class to
-use as a single reference point for your program or to coordinate behavior across a system.
+> `SmartMessenger` クラス内の `receiveMessage()` 関数を書き直す必要はありません。
+ある意味では、クラスを宣言すると同時に、その唯一のインスタンスも生成することになります。
+オブジェクト宣言は、プログラムの単一の参照ポイントとして使用するクラスを作成したい場合や、システム全体での動作を調整したい場合に役立ちます。
 
-> A class that has only one instance that is easily accessible is called a **singleton**.
+> インスタンスが1つしかなく、そのインスタンスに簡単にアクセスできるクラスを **シングルトン** と呼びます。
 >
 {style="tip"}
 
-Objects in Kotlin are **lazy**, meaning they are created only when accessed. Kotlin also ensures that all
-objects are created in a thread-safe manner so that you don't have to check this manually.
+Kotlin のオブジェクトは **lazy(遅延評価)** であり、アクセスされたときにのみ生成されます。
+また、Kotlin ではすべてのオブジェクトがスレッドセーフな方法で生成されるよう保証されているため、手動でこれを確認する必要はありません。
 
-To create an object declaration, use the `object` keyword:
+オブジェクト宣言を作成するには、`object` キーワードを使用します：
 
 ```kotlin
 object DoAuth {}
 ```
 
-Following the name of your `object`, add any properties or member functions within the object body defined by curly braces `{}`.
+`object` の名前の後に、中括弧 `{}` で囲まれたオブジェクト本体内に、プロパティやメンバ関数を追加します。
 
-> Objects can't have constructors, so they don't have headers like classes.
+> オブジェクトにはコンストラクタがないため、クラスのようなヘッダーファイルはありません。
 >
 {style="note"}
 
-For example, let's say that you wanted to create an object called `DoAuth` that is responsible for authentication:
+たとえば、認証を担当する `DoAuth` というオブジェクトを作成したい場合を考えてみましょう：
 
 ```kotlin
 object DoAuth {
@@ -41,17 +42,17 @@ object DoAuth {
 }
 
 fun main(){
-    // The object is created when the takeParams() function is called
+    // takeParams() 関数が呼び出されると、オブジェクトが作成されます
     DoAuth.takeParams("coding_ninja", "N1njaC0ding!")
     // input Auth parameters = coding_ninja:N1njaC0ding!
 }
 ```
 {kotlin-runnable="true" id="kotlin-tour-object-declarations"}
 
-The object has a member function called `takeParams` that accepts `username` and `password` variables as parameters
-and prints a string to the console. The `DoAuth` object is only created when the function is called for the first time.
+このオブジェクトには、`takeParams` というメンバー関数があり、この関数は `username` と `password` という変数を引数として受け取り、コンソールに文字列を出力します。
+The `DoAuth` object is only created when the function is called for the first time.
 
-> Objects can inherit from classes and interfaces. For example:
+> オブジェクトはクラスやインターフェースから継承することができます。例えば：
 > 
 > ```kotlin
 > interface Auth {
@@ -68,23 +69,23 @@ and prints a string to the console. The `DoAuth` object is only created when the
 {style="note"}
 
 #### Data objects
+#### データオブジェクト
 
-To make it easier to print the contents of an object declaration, Kotlin has **data** objects. Similar to data classes,
-which you learned about in the beginner tour, data objects automatically come with additional member functions: 
+オブジェクト宣言の内容を印刷しやすくするために、Kotlinには**data**オブジェクトが用意されています。
+初心者向けツアーで学んだデータクラスと同様に、データオブジェクトには自動的に追加のメンバ関数が備わっています： 
 `toString()` and `equals()`.
 
-> Unlike data classes, data objects do not come automatically with the `copy()` member function because they only have
-> a single instance that can't be copied.
+> データクラスとは異なり、データオブジェクトには `copy()` メンバ関数が自動的に用意されていません。これは、データオブジェクトにはコピーできない単一のインスタンスしか存在しないためです。
 >
 {type ="note"}
 
-To create a data object, use the same syntax as for object declarations but prefix it with the `data` keyword:
+データオブジェクトを作成するには、オブジェクト宣言と同じ構文を使用しますが、その先頭に `data` キーワードを付けます。
 
 ```kotlin
 data object AppConfig {}
 ```
 
-For example:
+例えば：
 
 ```kotlin
 data object AppConfig {
@@ -102,27 +103,27 @@ fun main() {
 ```
 {kotlin-runnable="true" id="kotlin-tour-data-objects"}
 
-For more information about data objects, see [](object-declarations.md#data-objects).
+データオブジェクトの詳細については、[オブジェクトの宣言と式(Object declarations and expressions)](object-declarations.md#data-objects)を参照してください。
 
 #### Companion objects
+#### 関連オブジェクト(コンパニオン・オブジェクト)
 
-In Kotlin, a class can have an object: a **companion** object. You can only have **one** companion object per class.
-A companion object is created only when its class is referenced for the first time.
+Kotlinでは、クラスに**コンパニオン**オブジェクトというオブジェクトを定義することができます。1つのクラスにつき、**1つ**のコンパニオンオブジェクトしか定義できません。
+コンパニオンオブジェクトは、そのクラスが初めて参照されたときにのみ作成されます。
 
-Any properties or functions declared inside a companion object are shared across all class instances.
+コンパニオンオブジェクト内で宣言されたプロパティや関数は、すべてのクラスインスタンス間で共有されます。
 
-To create a companion object within a class, use the same syntax for an object declaration but prefix it with the `companion`
-keyword:
+クラス内にコンパニオンオブジェクトを作成するには、オブジェクト宣言と同じ構文を使用しますが、その前に `companion` キーワードを付けます。
 
 ```kotlin
 companion object Bonger {}
 ```
 
-> A companion object doesn't have to have a name. If you don't define one, the default is `Companion`.
+> コンパニオンオブジェクトに名前を付ける必要はありません。名前を定義しない場合、デフォルトは `Companion` になります。
 > 
 {style="note"}
 
-To access any properties or functions of the companion object, reference the class name. For example:
+コンパニオン・オブジェクトのプロパティや関数にアクセスするには、クラス名を指定します。例：
 
 ```kotlin
 class BigBen {
@@ -134,29 +135,27 @@ class BigBen {
     }
 
 fun main() {
-    // Companion object is created when the class is referenced for the
-    // first time.
+    // コンパニオンオブジェクトは、そのクラスが初めて参照されたときに作成されます。
     BigBen.getBongs(12)
     // BONG BONG BONG BONG BONG BONG BONG BONG BONG BONG BONG BONG 
 }
 ```
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3" id="kotlin-tour-classes-companion-object"}
 
-This example creates a class called `BigBen` that contains a companion object called `Bonger`. The companion object
-has a member function called `getBongs()` that accepts an integer and prints `"BONG"` to the console the same number of times
-as the integer.
+この例では、`Bonger` というコンパニオンオブジェクトを含む `BigBen` というクラスを作成します。
+このコンパニオンオブジェクトには、`getBongs()` というメンバ関数があり、整数を受け取り、その整数の値と同じ回数だけ `「BONG」` をコンソールに出力します。
 
-In the `main()` function, the `getBongs()` function is called by referring to the class name. The companion object is created
-at this point. The `getBongs()` function is called with parameter `12`.
+`main()`関数内では、クラス名を指定して`getBongs()`関数が呼び出されます。この時点でコンパニオンオブジェクトが作成されます。
+`getBongs()` 関数は、引数 `12` を渡して呼び出されます。
 
-For more information, see [](object-declarations.md#companion-objects).
+詳細については、[オブジェクトの宣言と式(Object declarations and expressions)](object-declarations.md#companion-objects)を参照してください。
 
-## Practice {completion-point="true"}
+## 演習 {completion-point="true"}
 
-### Exercise 1 {initial-collapse-state="collapsed" collapsible="true" id="objects-exercise-1"}
+### 課題 1 {initial-collapse-state="collapsed" collapsible="true" id="objects-exercise-1"}
 
-You run a coffee shop and have a system for tracking customer orders. Consider the code below and complete the declaration
-of the second data object so that the following code in the `main()` function runs successfully:
+あなたはコーヒーショップを経営しており、顧客の注文を管理するシステムを導入しています。
+以下のコードを検討し、`main()`関数内の次のコードが正常に実行されるように、2番目のデータオブジェクトの宣言を完成させてください：
 
 |---|---|
 
@@ -176,13 +175,13 @@ data object OrderOne: Order {
 data object // Write your code here
 
 fun main() {
-    // Print the name of each data object
+    // 各データオブジェクトの名前を出力する
     println("Order name: $OrderOne")
     // Order name: OrderOne
     println("Order name: $OrderTwo")
     // Order name: OrderTwo
 
-    // Check if the orders are identical
+    // 注文が同一かどうかを確認する
     println("Are the two orders identical? ${OrderOne == OrderTwo}")
     // Are the two orders identical? false
 
@@ -220,13 +219,13 @@ data object OrderTwo: Order {
 }
 
 fun main() {
-    // Print the name of each data object
+    // 各データオブジェクトの名前を出力する
     println("Order name: $OrderOne")
     // Order name: OrderOne
     println("Order name: $OrderTwo")
     // Order name: OrderTwo
 
-    // Check if the orders are identical
+    // 注文内容が同一かどうかを確認する
     println("Are the two orders identical? ${OrderOne == OrderTwo}")
     // Are the two orders identical? false
 
@@ -243,11 +242,10 @@ fun main() {
 ```
 {initial-collapse-state="collapsed" collapsible="true" collapsed-title="Example solution" id="kotlin-tour-objects-solution-1"}
 
-### Exercise 2 {initial-collapse-state="collapsed" collapsible="true" id="objects-exercise-2"}
+### 課題 2 {initial-collapse-state="collapsed" collapsible="true" id="objects-exercise-2"}
 
-Create an object declaration that inherits from the `Vehicle` interface to create a unique vehicle type: `FlyingSkateboard`.
-Implement the `name` property and the `move()` function in your object so that the following code in the `main()` function runs 
-successfully:
+`Vehicle` インターフェースを継承するオブジェクト宣言を作成し、独自の乗り物タイプ `FlyingSkateboard` を作成します。
+`main()` 関数内の以下のコードが正常に実行されるように、オブジェクトに `name` プロパティと `move()` 関数を実装してください：
 
 |---|---|
 
@@ -291,13 +289,13 @@ fun main() {
 ```
 {initial-collapse-state="collapsed" collapsible="true" collapsed-title="Example solution" id="kotlin-tour-objects-solution-2"}
 
-### Exercise 3 {initial-collapse-state="collapsed" collapsible="true" id="objects-exercise-3"}
+### 課題 3 {initial-collapse-state="collapsed" collapsible="true" id="objects-exercise-3"}
 
-You are building a user registration module for an app. You want to keep email validation associated with the `User`
-class but don't want to create an unnecessary `User` instance if the email address is invalid.
+あなたは、あるアプリ用のユーザー登録モジュールを開発しています。
+`User` クラスに関連付けられたメールアドレスの検証は維持したいが、メールアドレスが無効な場合に不必要な `User` インスタンスを作成したくはない。
 
-For this exercise, consider an email address valid if it contains both `@` and `.`. Complete the data class so that the
-following code in the `main()` function runs successfully:
+この演習では、`@` と `.` の両方が含まれているメールアドレスを有効なものとみなします。
+`main()`関数内の以下のコードが正常に実行されるように、データクラスを完成させてください：
 
 <deflist collapsible="true">
     <def title="Hint">
@@ -360,8 +358,8 @@ fun main() {
 ```
 {initial-collapse-state="collapsed" collapsible="true" collapsed-title="Example solution" id="kotlin-tour-objects-solution-3"}
 
-> As an extension of this exercise, try using functions in companion objects as factory methods to construct
-> instances of a class. For an example and more information about this pattern, see [](object-declarations.md#companion-objects).
+> この演習の延長として、コンパニオンオブジェクト内の関数をファクトリメソッドとして使い、クラスのインスタンスを作成してみてください。
+> For an example and more information about this pattern, see [オブジェクトの宣言と式(Object declarations and expressions)](object-declarations.md#companion-objects).
 >
 {style="tip"}
 
