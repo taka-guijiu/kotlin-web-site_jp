@@ -7,23 +7,23 @@
 この章では、Kotlinにおけるプロパティの仕組みについてさらに詳しく掘り下げ、コード内でプロパティを活用するその他の方法についても解説します。
 
 ## Backing fields
+## バッキングフィールド
 
-In Kotlin, properties have default `get()` and `set()` functions, known as property accessors, which handle retrieving 
-and modifying their values. While these default functions are not explicitly visible in the code, the compiler automatically
-generates them to manage property access behind the scenes. These accessors use a **backing field** to store 
-the actual property value.
 
-Backing fields exist if either of the following is true:
+Kotlinでは、プロパティにはデフォルトの`get()`および`set()`関数（プロパティアクセサと呼ばれる）が用意されており、これらが値の取得や変更を処理します。
+これらのデフォルト関数はコード上では明示的には表示されませんが、コンパイラが裏でプロパティへのアクセスを管理するために自動的に生成しています。
+これらのアクセサは、**バッキングフィールド**を使用して、プロパティの実際の値を格納します。
 
-* You use the default `get()` or `set()` functions for the property.
-* You try to access the property value in code by using the `field` keyword.
+以下のいずれかが当てはまる場合、バッキングフィールドが存在します：
 
-> `get()` and `set()` functions are also called getters and setters.
+* プロパティに対して、デフォルトの `get()` または `set()` 関数を使用します。
+* コード内で `field` キーワードを使用して、プロパティの値にアクセスしようとします。
+
+> `get()` および `set()` 関数は、ゲッターやセッターとも呼ばれます。
 >
 {style="tip"}
 
-For example, this code has the `category` property that has no custom `get()` or `set()` functions and therefore uses the
-default implementations:
+たとえば、次のコードには `category` プロパティがありますが、このプロパティにはカスタム `get()` 関数や `set()` 関数が定義されていないため、デフォルトの実装が使用されます：
 
 ```kotlin
 class Contact(val id: Int, var email: String) {
@@ -31,7 +31,7 @@ class Contact(val id: Int, var email: String) {
 }
 ```
 
-Under the hood, this is equivalent to this pseudocode:
+内部的には、これは次の擬似コードに相当します：
 
 ```kotlin
 class Contact(val id: Int, var email: String) {
@@ -44,10 +44,10 @@ class Contact(val id: Int, var email: String) {
 ```
 {validate="false"}
 
-In this example:
+この例では：
 
-* The `get()` function retrieves the property value from the field: `""`.
-* The `set()` function accepts `value` as a parameter and assigns it to the field, where `value` is `""`. 
+* `get()` 関数は、`field`からプロパティの値`""`を取得します。
+* `set()` 関数は `value` をパラメータとして受け取り、それを`field`に割り当てます。ここで、`value` は `""` です。
 
 Access to the backing field is useful when you want to add extra logic in your `get()` or `set()` functions 
 without causing an infinite loop. For example, you have a `Person` class with a `name` property:
@@ -59,11 +59,8 @@ class Person {
 }
 ```
 
-You want to ensure that the first letter of the `name` property is capitalized, so you create a custom `set()` function
-that uses the [`.replaceFirstChar()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/replace-first-char.html) 
-and [`.uppercase()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/uppercase-char.html) extension functions. 
-However, if you refer to the property directly in your `set()` function, you create an infinite loop and see a `StackOverflowError`
-at runtime:
+`name` プロパティの最初の文字を大文字にする必要があるため、[`.replaceFirstChar()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/replace-first-char.html) および [`.uppercase()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/uppercase-char.html) 拡張関数を使用するカスタム `set()` 関数を作成します。
+しかし、`set()` 関数内でそのプロパティを直接参照すると、無限ループが発生し、実行時に `StackOverflowError` が発生します：
 
 ```kotlin
 class Person {
@@ -83,7 +80,7 @@ fun main() {
 ```
 {validate="false" kotlin-runnable="true" kotlin-min-compiler-version="1.3" id="kotlin-tour-properties-stackoverflow"}
 
-To fix this, you can use the backing field in your `set()` function instead by referencing it with the `field` keyword:
+この問題を解決するには、`set()` 関数内で `field` キーワードを使ってバッキングフィールドを参照するようにします。
 
 ```kotlin
 class Person {
@@ -102,38 +99,39 @@ fun main() {
 ```
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3" id="kotlin-tour-properties-backingfield"}
 
-Backing fields are also useful when you want to add logging, send notifications when a property value changes,
-or use additional logic that compares the old and new property values.
+バッキングフィールドは、ロギングを追加したり、プロパティの値が変更された際に通知を送信したり、新旧のプロパティ値を比較する追加のロジックを使用したりする場合にも役立ちます。
 
-For more information, see [Backing fields](properties.md#backing-fields).
+詳細については、[バッキングフィールド](properties.md#backing-fields)を参照してください。
 
 ## Extension properties
+## 拡張プロパティ
 
-Just like extension functions, there are also extension properties. Extension properties allow you to add new properties
-to existing classes without modifying their source code. However, extension properties in Kotlin do **not** have backing
-fields. This means that you need to write the `get()` and `set()` functions yourself. Additionally, the lack of a backing
-field means that they can't hold any state.
+拡張関数と同様に、拡張プロパティも存在します。
+拡張プロパティを使用すると、ソースコードを変更することなく、既存のクラスに新しいプロパティを追加することができます。
+ただし、Kotlinの拡張プロパティには、**バックフィールド**は存在しません。
+つまり、`get()` および `set()` 関数を自分で記述する必要があります。
+さらに、バッキングフィールドがないため、状態を保持することができません。
 
-To declare an extension property, write the name of the class that you want to extend followed by a `.` and the name of
-your property. Just like with normal class properties, you need to declare a type for your property. 
-For example:
+拡張プロパティを宣言するには、拡張したいクラスの名前の後に `.` を付け、その後にプロパティ名を記述します。
+通常のクラスプロパティと同様に、プロパティの型を宣言する必要があります。
+例えば：
 
 ```kotlin
 val String.lastChar: Char
 ```
 {validate="false"}
 
-Extension properties are most useful when you want a property to contain a computed value without using inheritance.
-You can think of extension properties working like a function with only one parameter: the receiver.
+拡張プロパティは、継承を使用せずにプロパティに計算された値を格納したい場合に最も役立ちます。
+拡張プロパティは、引数が1つだけ（レシーバー）の関数のように動作すると考えてください。
 
-For example, let's say that you have a data class called `Person` with two properties: `firstName` and `lastName`.
+たとえば、`Person` というデータクラスがあり、そこに `firstName` と `lastName` という 2 つのプロパティがあるとします。
 
 ```kotlin
 data class Person(val firstName: String, val lastName: String)
 ```
 
-You want to be able to access the person's full name without modifying the `Person` data class or inheriting from it.
-You can do this by creating an extension property with a custom `get()` function:
+`Person` データクラスを変更したり、そこから継承したりすることなく、その人物のフルネームにアクセスできるようにしたい。
+これを行うには、カスタム `get()` 関数を持つ拡張プロパティを作成します：
 
 ```kotlin
 data class Person(val firstName: String, val lastName: String)
@@ -152,34 +150,34 @@ fun main() {
 ```
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3" id="kotlin-tour-properties-extension"}
 
-> Extension properties can't override existing properties of a class.
+> 拡張プロパティは、クラスの既存のプロパティを上書きすることはできません。
 > 
 {style="note"}
 
-Just like with extension functions, the Kotlin standard library uses extension properties widely. For example,
-see the [`lastIndex` property](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/last-index.html) for a `CharSequence`.
+拡張関数と同様に、Kotlinの標準ライブラリでは拡張プロパティも広く利用されています。例えば、`CharSequence` の [`lastIndex` プロパティ](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/last-index.html) を参照してください。
 
 ## Delegated properties
+## 委譲プロパティ
 
-You already learned about delegation in the [Classes and interfaces](kotlin-tour-intermediate-classes-interfaces.md#delegation) chapter. You can
-also use delegation with properties to delegate their property accessors to another object. This is useful
-when you have more complex requirements for storing properties that a simple backing field can't handle, such as storing
-values in a database table, browser session, or map. Using delegated properties also reduces boilerplate code because the
-logic for getting and setting your properties is contained only in the object that you delegate to.
+[クラスとインターフェース](kotlin-tour-intermediate-classes-interfaces.md#delegation)の章で、デリゲーションについてすでに学習しました。
+また、プロパティの委譲を使用して、そのプロパティのアクセサを別のオブジェクトに委譲することもできます。
+これは、データベースのテーブルやブラウザのセッション、マップなどに値を保存するなど、単純なバッキングフィールドでは対応できないような、より複雑なプロパティの保存要件がある場合に役立ちます。
+委譲プロパティを使用すると、プロパティの取得や設定に関するロジックが、委譲先のオブジェクト内にのみ含まれるため、定型コードも削減されます。
 
-The syntax is similar to using delegation with classes but operates on a different level. Declare your property, followed by
-the `by` keyword and the object you want to delegate to. For example:
+構文はクラスでの委譲の使用と似ていますが、動作するレベルが異なります。
+プロパティを宣言し、その後に `by` キーワードと、委譲先のオブジェクトを指定します。
+例えば：
 
 ```kotlin
 val displayName: String by Delegate
 ```
 
-Here, the delegated property `displayName` refers to the `Delegate` object for its property accessors.
+ここでは、委譲されたプロパティ `displayName` は、そのプロパティアクセサに関して `Delegate` オブジェクトを参照しています。
 
-Every object you delegate to **must** have a `getValue()` operator function, which Kotlin uses to retrieve the value of 
-the delegated property. If the property is mutable, it must also have a `setValue()` operator function for Kotlin to set its value.
+委譲先のすべてのオブジェクトには、**必ず** `getValue()` 演算子関数が用意されている必要があります。Kotlin はこの関数を使用して、委譲されたプロパティの値を取得します。
+プロパティが可変である場合、Kotlinがその値を設定できるように、`setValue()` 演算子関数も用意する必要があります。
 
-By default, the `getValue()` and `setValue()` functions have the following construction:
+デフォルトでは、`getValue()` および `setValue()` 関数は次のような構成になっています：
 
 ```kotlin
 operator fun getValue(thisRef: Any?, property: KProperty<*>): String {}
@@ -190,21 +188,22 @@ operator fun setValue(thisRef: Any?, property: KProperty<*>, value: String) {}
 
 In these functions:
 
-* The `operator` keyword marks these functions as operator functions, enabling them to overload the `get()` and `set()` functions.
-* The `thisRef` parameter refers to the object **containing** the delegated property. By default, the type is set to `Any?`, but you may need to declare a more specific type.
-* The `property` parameter refers to the property whose value is accessed or changed. You can use this parameter to access information
-like the property's name or type. By default, the type is set to `KProperty<*>` but you can also use `Any?`. You don't need to worry about changing this in your code.
+* `operator` キーワードは、これらの関数を演算子関数として指定し、`get()` および `set()` 関数をオーバーロードできるようにします。
+* `thisRef` パラメータは、委譲されたプロパティを**含む**オブジェクトを指します。
+デフォルトでは、型は `Any?` に設定されていますが、より具体的な型を宣言する必要がある場合があります。
+* `property` パラメータは、その値が参照または変更されるプロパティを指します。
+このパラメータを使用すると、プロパティの名前や型などの情報にアクセスできます。デフォルトでは、型は `KProperty<*>` に設定されていますが、`Any?` を使用することもできます。
+コード内でこれを変更することについては、心配する必要はありません。
 
-The `getValue()` function has a return type of `String` by default, but you can adjust this if you want.
+`getValue()` 関数の戻り値の型はデフォルトで `String` ですが、必要に応じて変更することができます。
 
-The `setValue()` function has an additional parameter `value`, which is used to hold the new value that's assigned to the
-property.
+`setValue()` 関数には、プロパティに割り当てられる新しい値を格納するために使用される `value` という追加のパラメータがあります。
 
-So, how does this look in practice? Suppose you want to have a computed property, like a user's display name, that is calculated
-only once because the operation is expensive and your application is performance-sensitive. You can use a delegated property
-to cache the display name so that it is only computed once but can be accessed anytime without performance impact.
+では、実際にはどのような感じになるのでしょうか？
+たとえば、ユーザーの表示名のような計算プロパティを用意したいとします。その計算処理は負荷が高く、アプリケーションのパフォーマンスが重要なため、このプロパティは一度だけ計算されるようにしたいとします。
+委譲プロパティを使用すると、表示名をキャッシュできるため、計算は一度だけ行われ、パフォーマンスに影響を与えることなくいつでもアクセスできるようになります。
 
-First, you need to create the object to delegate to. In this case, the object will be an instance of the `CachedStringDelegate` class:
+まず、デリゲート先のオブジェクトを作成する必要があります。この場合、そのオブジェクトは `CachedStringDelegate` クラスのインスタンスになります：
 
 ```kotlin
 class CachedStringDelegate {
@@ -212,8 +211,8 @@ class CachedStringDelegate {
 }
 ```
 
-The `cachedValue` property contains the cached value. Within the `CachedStringDelegate` class, add the behavior that you
-want from the `get()` function of the delegated property to the `getValue()` operator function body:
+`cachedValue` プロパティには、キャッシュされた値が格納されています。
+`CachedStringDelegate` クラス内で、委譲されたプロパティの `get()` 関数に期待する動作を、`getValue()` 演算子の関数本体に追加します。
 
 ```kotlin
 class CachedStringDelegate {
@@ -231,12 +230,11 @@ class CachedStringDelegate {
 }
 ```
 
-The `getValue()` function checks whether the `cachedValue` property is `null`. If it is, the function assigns the
-`"Default value"` and prints a string for logging purposes. If the `cachedValue` property has already been computed, the
-property isn't `null`. In this case, another string is printed for logging purposes. Finally, the function uses the Elvis
-operator to return the cached value or `"Unknown"` if the value is `null`.
+`getValue()` 関数は、`cachedValue` プロパティが `null` かどうかを確認します。`null` の場合、この関数は `「Default value」` を代入し、ログ記録のために文字列を出力します。
+`cachedValue` プロパティがすでに計算されている場合、そのプロパティは `null` ではありません。
+この場合、ログ出力のために別の文字列が出力されます。最後に、この関数はエルビス演算子を使用して、キャッシュされた値を返すか、値が `null` の場合は `「Unknown」` を返します。
 
-Now you can delegate the property that you want to cache (`val displayName`) to an instance of the `CachedStringDelegate` class:
+これで、キャッシュしたいプロパティ（`val displayName`）を `CachedStringDelegate` クラスのインスタンスに委譲できるようになりました：
 
 ```kotlin
 class CachedStringDelegate {
@@ -260,12 +258,12 @@ class User(val firstName: String, val lastName: String) {
 fun main() {
     val user = User("John", "Doe")
 
-    // First access computes and caches the value
+    // 最初のアクセス時に値を計算してキャッシュする
     println(user.displayName)
     // Computed and cached: John Doe
     // John Doe
 
-    // Subsequent accesses retrieve the value from cache
+    // それ以降のアクセスでは、キャッシュから値が読み込まれます
     println(user.displayName)
     // Accessed from cache: John Doe
     // John Doe
@@ -273,32 +271,29 @@ fun main() {
 ```
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3" id="kotlin-tour-properties-delegated"}
 
-This example:
+この例では：
 
-* Creates a `User` class that has two properties in the header, `firstName`, and `lastName`, and one property in the
-class body, `displayName`.
-* Delegates the `displayName` property to an instance of the `CachedStringDelegate` class.
-* Creates an instance of the `User` class called `user`.
-* Prints the result of accessing the `displayName` property on the `user` instance.
+* ヘッダーに `firstName` と `lastName` の 2 つのプロパティを持ち、クラス本体に `displayName` という 1 つのプロパティを持つ `User` クラスを作成します。
+* `displayName` プロパティを `CachedStringDelegate` クラスのインスタンスに委譲します。
+* `User` クラスのインスタンスを `user` という名前で作成します。
+* `user` インスタンスの `displayName` プロパティにアクセスした結果を出力します。
 
-Note that in the `getValue()` function, the type for the `thisRef` parameter is narrowed from `Any?` type to the object
-type: `User`. This is so that the compiler can access the `firstName` and `lastName` properties of the `User` class.
+なお、`getValue()` 関数では、`thisRef` パラメータの型が `Any?` 型からオブジェクト型 `User` へと絞り込まれている点に注意してください。
+これは、コンパイラが `User` クラスの `firstName` および `lastName` プロパティにアクセスできるようにするためです。
 
 ### Standard delegates
 
-The Kotlin standard library provides some useful delegates for you so you don't have to always create yours from scratch.
-If you use one of these delegates, you don't need to define `getValue()` and `setValue()` functions because the standard
-library automatically provides them.
+Kotlinの標準ライブラリには、便利なデリゲートがいくつか用意されているため、毎回一から作成する必要はありません。
+これらのデリゲートのいずれかを使用する場合、標準ライブラリが自動的に `getValue()` および `setValue()` 関数を提供するため、これらを定義する必要はありません。
 
 #### Lazy properties
 
-To initialize a property only when it's first accessed, use a lazy property. The standard library provides the `Lazy`
-interface for delegation. 
+プロパティが最初にアクセスされたときのみ初期化するには、遅延プロパティを使用します。
+標準ライブラリでは、デリゲーションのために `Lazy` インターフェースが提供されています。
 
-To create an instance of the `Lazy` interface, use the `lazy()` function by providing it
-with a lambda expression to execute when the `get()` function is called for the first time. Any further calls of the `get()`
-function return the same result that was provided on the first call. Lazy properties use the [trailing lambda](kotlin-tour-functions.md#trailing-lambdas) syntax
-to pass the lambda expression.
+`Lazy` インターフェースのインスタンスを作成するには、`lazy()` 関数を使用し、`get()` 関数が初めて呼び出されたときに実行されるラムダ式を引数として渡します。
+その後、`get()` 関数を再度呼び出しても、最初の呼び出し時に返されたのと同じ結果が返されます。
+レイジープロパティでは、ラムダ式を渡すために [トレーリングラムダ](kotlin-tour-functions.md#trailing-lambdas) の構文を使用します。
 
 For example:
 
@@ -325,51 +320,51 @@ fun fetchData() {
 }
 
 fun main() {
-    // First time accessing databaseConnection
+    // データベース接続への初回アクセス
     fetchData()
     // Connecting to the database...
     // Data: [Data1, Data2, Data3]
 
-    // Subsequent access uses the existing connection
+    // 以降のアクセスでは、既存の接続が使用されます
     fetchData()
     // Data: [Data1, Data2, Data3]
 }
 ```
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3" id="kotlin-tour-properties-lazy"}
 
-In this example:
+この例では：
 
-* There is a `Database` class with `connect()` and `query()` member functions. 
-* The `connect()` function prints a string to the console, and the `query()` function accepts an SQL query and returns a list.
-* There is a `databaseConnection` property that is a lazy property.
-* The lambda expression provided to the `lazy()` function:
-  * Creates an instance of the `Database` class.
-  * Calls the `connect()` member function on this instance (`db`).
-  * Returns the instance.
-* There is a `fetchData()` function that:
-  * Creates an SQL query by calling the `query()` function on the `databaseConnection` property.
-  * Assigns the SQL query to the `data` variable.
-  * Prints the `data` variable to the console.
-* The `main()` function calls the `fetchData()` function. The first time it is called, the lazy property is initialized.
-The second time, the same result is returned as the first call.
+* `connect()` および `query()` というメンバ関数を持つ `Database` クラスがあります。
+* `connect()` 関数はコンソールに文字列を出力し、`query()` 関数は SQL クエリを受け取ってリストを返します。
+* `databaseConnection` プロパティは、遅延読み込みプロパティです。
+* `lazy()` 関数に渡されるラムダ式：
+  * `Database` クラスのインスタンスを作成します。
+  * このインスタンス（`db`）の `connect()` メンバ関数を呼び出します。
+  * インスタンスを返します。
+* `fetchData()` という関数があり、その機能は次のとおりです：
+  * `databaseConnection` プロパティの `query()` 関数を呼び出して、SQL クエリを作成します。
+  * SQLクエリを`data`変数に代入します。
+  * `data` 変数の値をコンソールに出力します。
+* `main()` 関数は `fetchData()` 関数を呼び出します。初めて呼び出された際、lazy プロパティが初期化されます。
+2回目の呼び出しでは、1回目の呼び出しと同じ結果が返されます。
 
-Lazy properties are useful not only when initialization is resource-intensive but also when a property might not be used
-in your code. Additionally, lazy properties are thread-safe by default, which is particularly beneficial if you are working
-in a concurrent environment.
+遅延プロパティは、初期化にリソースを大量に消費する場合だけでなく、コード内でそのプロパティが使用されない可能性がある場合にも役立ちます。
+さらに、レイジープロパティはデフォルトでスレッドセーフであるため、並行処理環境での作業において特に有益です。
 
-For more information, see [Lazy properties](delegated-properties.md#lazy-properties).
+詳細については、[遅延プロパティ](delegated-properties.md#lazy-properties)を参照してください。
 
 #### Observable properties
+#### 観測可能なプロパティ（オブザーバルプロパティ）
 
-To monitor whether the value of a property changes, use an observable property. An observable property is useful when
-you want to detect a change in the property value and use this knowledge to trigger a reaction. The standard library provides
-the `Delegates` object for delegation.
+プロパティの値が変更されたかどうかを監視するには、オブザーバブルプロパティを使用します。
+オブザーバブルプロパティは、プロパティ値の変化を検出し、その情報を基に何らかの反応を引き起こしたい場合に役立ちます。
+標準ライブラリには、委譲を行うための `Delegates` オブジェクトが用意されています。
 
-To create an observable property, you must first import `kotlin.properties.Delegates.observable`. Then, use the `observable()` function
-and provide it with a lambda expression to execute whenever the property changes. Just like with lazy properties, observable
-properties use the [trailing lambda](kotlin-tour-functions.md#trailing-lambdas) syntax to pass the lambda expression.
+オブザーバブルプロパティを作成するには、まず `kotlin.properties.Delegates.observable` をインポートする必要があります。
+次に、`observable()` 関数を使用し、プロパティが変更されるたびに実行されるラムダ式を引数として渡します。
+遅延プロパティと同様に、オブザーバブルプロパティも、ラムダ式を渡すために [トレーリングラムダ](kotlin-tour-functions.md#trailing-lambdas) の構文を使用します。
 
-For example:
+例えば：
 
 ```kotlin
 import kotlin.properties.Delegates.observable
@@ -395,45 +390,45 @@ fun main() {
 ```
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3" id="kotlin-tour-properties-observable"}
 
-In this example:
+この例では：
 
-* There is a `Thermostat` class that contains an observable property: `temperature`.
-* The `observable()` function accepts `20.0` as a parameter and uses it to initialize the property.
-* The lambda expression provided to the `observable()` function:
-  * Has three parameters:
-    * `_`, which refers to the property itself.
-    * `old`, which is the old value of the property.
-    * `new`, which is the new value of the property.
-  * Checks if the `new` parameter is greater than `25` and, depending on the result, prints a string to console.
-* The `main()` function:
-  * Creates an instance of the `Thermostat` class called `thermostat`.
-  * Updates the value of the `temperature` property of the instance to `22.5`, which triggers a print statement with a temperature update.
-  * Updates the value of the `temperature` property of the instance to `27.0`, which triggers a print statement with a warning.
+* `Thermostat` クラスには、オブザーバブルプロパティ `temperature` が含まれています。
+* `observable()` 関数は `20.0` を引数として受け取り、それを使ってプロパティを初期化します。
+* `observable()` 関数に渡されるラムダ式：
+  * 3つのパラメータがあります：
+    * `_`：プロパティそのものを指します。
+    * `old`：プロパティの以前の値。
+    * `new`：プロパティの新しい値です。
+  * `new` パラメータが `25` より大きいかどうかを確認し、その結果に応じてコンソールに文字列を出力します。
+* `main()` 関数：
+  * `Thermostat` クラスのインスタンスを `thermostat` という名前で作成します。
+  * インスタンスの `temperature` プロパティの値を `22.5` に更新します。これにより、温度の更新情報を表示する print 文が実行されます。
+  * インスタンスの `temperature` プロパティの値を `27.0` に更新すると、警告を含む出力文が実行されます。
 
-Observable properties are useful not only for logging and debugging purposes. You can also use them for use cases like
-updating a UI or to perform additional checks, like verifying the validity of data.
+観測可能なプロパティは、ロギングやデバッグの目的だけでなく、さまざまな場面で役立ちます。
+また、UIの更新や、データの有効性の確認といった追加のチェックを行う場合などにも利用できます。
 
-For more information, see [Observable properties](delegated-properties.md#observable-properties).
+詳細については、[オブザーバブルプロパティ](delegated-properties.md#observable-properties)を参照してください。
 
-## Practice {completion-point="true"}
+## 演習 {completion-point="true"}
 
-### Exercise 1 {initial-collapse-state="collapsed" collapsible="true" id="properties-exercise-1"}
+### 課題 1 {initial-collapse-state="collapsed" collapsible="true" id="properties-exercise-1"}
 
-You manage an inventory system at a bookstore. The inventory is stored in a list where each item represents the quantity
-of a specific book. For example, `listOf(3, 0, 7, 12)` means the store has 3 copies of the first book, 0 of the second,
-7 of the third, and 12 of the fourth.
+あなたは書店で在庫管理システムを運用しています。
+在庫はリストとして保存されており、各項目は特定の書籍の数量を表しています。
+たとえば、`listOf(3, 0, 7, 12)` は、その書店には第1巻が3冊、第2巻が0冊、第3巻が7冊、第4巻が12冊あることを意味します。
 
-Write a function called `findOutOfStockBooks()` that returns a list of indices for all the books that are out of stock.
+`findOutOfStockBooks()` という関数を記述し、在庫切れとなっているすべての書籍のインデックスのリストを返すようにしてください。
 
 <deflist collapsible="true">
     <def title="Hint 1">
-        Use the <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/indices.html"><code>indices</code></a> extension property from the standard library.
+        標準ライブラリの <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/indices.html"><code>indices</code></a> 拡張プロパティを使用してください。
     </def>
 </deflist>
 
 <deflist collapsible="true">
     <def title="Hint 2">
-        You can use the <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/build-list.html"><code>buildList()</code></a> function to create and manage a list instead of manually creating and returning a mutable list. The <code>buildList()</code> function uses a lambda with a receiver, which you learned about in earlier chapters.
+        手動で可変リストを作成して返す代わりに、<a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/build-list.html"><code>buildList()</code></a> 関数を使用して、リストを作成・管理することができます。 <code>buildList()</code> 関数は、前の章で学んだ、レシーバーを持つラムダ式を使用しています。
     </def>
 </deflist>
 
@@ -490,18 +485,18 @@ fun main() {
 ```
 {initial-collapse-state="collapsed" collapsible="true" collapsed-title="Example solution 2" id="kotlin-tour-properties-solution-1-2"}
 
-### Exercise 2 {initial-collapse-state="collapsed" collapsible="true" id="properties-exercise-2"}
+### 課題 2 {initial-collapse-state="collapsed" collapsible="true" id="properties-exercise-2"}
 
-You have a travel app that needs to display distances in both kilometers and miles. Create an extension property for the
-`Double` type called `asMiles` to convert a distance in kilometers to miles:
+キロメートルとマイルの両方で距離を表示する必要がある旅行アプリがあります。
+キロメートル単位の距離をマイルに変換するための、`Double` 型の `asMiles` という拡張プロパティを作成します。
 
-> The formula to convert kilometers to miles is `miles = kilometers * 0.621371`.
+> キロメートルをマイルに変換する計算式は、`マイル = キロメートル × 0.621371` です。
 >
 {style="note"}
 
 <deflist collapsible="true">
     <def title="Hint">
-        Remember that extension properties need a custom <code>get()</code> function.
+        拡張プロパティには、カスタム <code>get()</code> 関数が必要であることを忘れないでください。
     </def>
 </deflist>
 
@@ -539,11 +534,11 @@ fun main() {
 ```
 {initial-collapse-state="collapsed" collapsible="true" collapsed-title="Example solution" id="kotlin-tour-properties-solution-2"}
 
-### Exercise 3 {initial-collapse-state="collapsed" collapsible="true" id="properties-exercise-3"}
+### 課題 3 {initial-collapse-state="collapsed" collapsible="true" id="properties-exercise-3"}
 
-You have a system health checker that can determine the state of a cloud system. However, the two functions it can run 
-to perform a health check are performance intensive. Use lazy properties to initialize the checks so that the expensive
-functions are only run when needed:
+クラウドシステムの状態を把握できるシステムヘルスチェッカーがあります。
+ただし、ヘルスチェックを実行するために実行できる2つの機能は、処理負荷が高いものです。
+lazyプロパティを使用してチェックを初期化し、処理負荷の高い関数が必要なときにのみ実行されるようにします：
 
 |---|---|
 
@@ -599,14 +594,15 @@ fun main() {
 ```
 {initial-collapse-state="collapsed" collapsible="true" collapsed-title="Example solution" id="kotlin-tour-properties-solution-3"}
 
-### Exercise 4 {initial-collapse-state="collapsed" collapsible="true" id="properties-exercise-4"}
+### 課題 4 {initial-collapse-state="collapsed" collapsible="true" id="properties-exercise-4"}
 
-You're building a simple budget tracker app. The app needs to observe changes to the user's remaining budget and notify
-them whenever it goes below a certain threshold. You have a `Budget` class that is initialized with a `totalBudget` property
-that contains the initial budget amount. Within the class, create an observable property called `remainingBudget` that prints:
+あなたは、シンプルな予算管理アプリを作っています。
+このアプリは、ユーザーの残りの予算の変動を監視し、予算が一定の閾値を下回った際にはユーザーに通知する必要があります。
+`Budget` クラスがあり、初期予算額を含む `totalBudget` プロパティが初期化されています。
+クラス内で、`remainingBudget` という名前のオブザーバブルプロパティを作成し、以下を出力するようにしてください：
 
-* A warning when the value is lower than 20% of the initial budget.
-* An encouraging message when the budget is increased from the previous value.
+* 予算額が当初予算の20%を下回った場合に警告を表示する。
+* 予算が前回の金額から増額された際に表示される励ましのメッセージ。
 
 |---|---|
 
