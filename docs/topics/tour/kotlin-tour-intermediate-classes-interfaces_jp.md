@@ -8,24 +8,30 @@
 この章では、Kotlinが提供するコード共有の機能と、それらがどのようにしてコードの安全性と保守性を高めるかについて解説します。
 
 ## Class inheritance
+## クラスの継承
 
-In a previous chapter, we covered how you can use extension functions to extend classes without modifying the original source code.
-But what if you are working on something complex where sharing code **between** classes would be useful? In such cases, 
-you can use class inheritance.
+前の章では、元のソースコードを変更せずに、拡張関数を使ってクラスを拡張する方法について解説しました。
+しかし、クラス**間で**コードを共有した方が便利なような複雑なプロジェクトに取り組んでいる場合はどうでしょうか？
+そのような場合は、クラスの継承を利用することができます。
 
-By default, classes in Kotlin can't be inherited. Kotlin is designed this way to prevent unintended inheritance and make
-your classes easier to maintain.
+デフォルトでは、Kotlinのクラスは継承できません。
+Kotlinは、意図しない継承を防ぎ、クラスの保守性を高めるために、このように設計されています。
 
-Kotlin classes only support **single inheritance**, meaning it is only possible to inherit from **one class at a time**.
-This class is called the **parent**.
+Kotlinのクラスは**単一継承**のみをサポートしており、つまり**一度に1つのクラス**からのみ継承することができます。
+このクラスは **親** と呼ばれます。
 
-The parent of a class inherits from another class (the grandparent), forming a hierarchy. At the top of Kotlin's class
-hierarchy is the common parent class: `Any`. All classes ultimately inherit from the `Any` class:
+The parent of a class inherits from another class (the grandparent), forming a hierarchy. 
+Kotlinのクラス階層の最上位には、共通の親クラスである `Any` があります。
+すべてのクラスは、最終的には `Any` クラスを継承しています：
 
-![An example of the class hierarchy with Any type](any-type-class.png){width="200"}
+<!-- コメントアウト記号 -->
+<!-- ![Any型を用いたクラス階層の例](any-type-class.png){width=「200」} -->
 
-The `Any` class provides the `toString()` function as a member function automatically. Therefore, you can
-use this inherited function in any of your classes. For example:
+<div align="center">
+    <img src="any-type-class.png" width="200">  
+</div>
+
+`Any` クラスは、`toString()` 関数をメンバー関数として自動的に提供します。したがって、この継承された関数は、どのクラスでも使用できます。例えば：
 
 ```kotlin
 class Car(val make: String, val model: String, val numberOfDoors: Int)
@@ -34,66 +40,64 @@ fun main() {
     //sampleStart
     val car1 = Car("Toyota", "Corolla", 4)
 
-    // Uses the .toString() function via string templates to print class properties
-    println("Car1: make=${car1.make}, model=${car1.model}, numberOfDoors=${car1.numberOfDoors}")
-    // Car1: make=Toyota, model=Corolla, numberOfDoors=4
+    // 文字列テンプレートを介して .toString() 関数を使用し、クラスのプロパティを出力します
+    println("Car1: make=${car1.make}, model=${car1.model}, numberOfDoors=${car1.numberOfDoors}")    // Car1: make=Toyota, model=Corolla, numberOfDoors=4
     //sampleEnd
 }
 ```
 {kotlin-runnable="true" id="kotlin-tour-any-class"}
 
-If you want to use inheritance to share some code between classes, first consider using abstract classes.
+継承を利用してクラス間でコードを共有したい場合は、まず抽象クラスの使用を検討してください。
 
 ### Abstract classes
+### 抽象クラス
 
-Abstract classes can be inherited by default. The purpose of abstract classes is to provide members that other classes 
-inherit or implement. As a result, they have a constructor, but you can't create instances from them. Within the child 
-class, you define the behavior of the parent's properties and functions with the `override` keyword. In this way, 
-you can say that the child class "overrides" the members of the parent class.
+抽象クラスは、デフォルトで継承可能です。抽象クラスの目的は、他のクラスが継承または実装するメンバを提供することです。
+その結果、コンストラクタは存在しますが、それらからインスタンスを作成することはできません。
+子クラス内では、`override` キーワードを使用して、親クラスのプロパティや関数の挙動を定義します。
+このように、子クラスは親クラスのメンバを「上書きする」と言えるでしょう。
 
-> When you define the behavior of an inherited function or property, we call that an **implementation**.
+> 継承された関数やプロパティの挙動を定義することを、**実装**と呼びます。
 > 
 {style="tip"}
 
-Abstract classes can contain both functions and properties **with** implementation as well as functions and properties 
-**without** implementation, known as abstract functions and properties.
+抽象クラスには、実装が**ある**関数やプロパティと、実装が**ない**関数やプロパティ（これらは抽象関数および抽象プロパティと呼ばれる）の両方を含めることができます。
 
-To create an abstract class, use the `abstract` keyword:
+抽象クラスを作成するには、`abstract` キーワードを使用します：
 
 ```kotlin
 abstract class Animal
 ```
 
-To declare a function or a property **without** an implementation, you also use the `abstract` keyword:
+実装を**伴わない**関数やプロパティを宣言するには、`abstract` キーワードを使用します：
 
 ```kotlin
 abstract fun makeSound()
 abstract val sound: String
 ```
 
-For example, let's say that you want to create an abstract class called `Product` that you can create child classes from
-to define different product categories:
+たとえば、`Product` という抽象クラスを作成し、そこから派生クラスを作成してさまざまな商品カテゴリを定義したい場合を考えてみましょう：
 
 ```kotlin
 abstract class Product(val name: String, var price: Double) {
-    // Abstract property for the product category
+    // 商品カテゴリの抽象プロパティ
     abstract val category: String
 
-    // A function that can be shared by all products
+    // すべての製品で共有できる関数
     fun productInfo(): String {
         return "Product: $name, Category: $category, Price: $price"
     }
 }
 ```
 
-In the abstract class:
+抽象クラスでは：
 
-* The constructor has two parameters for the product's `name` and `price`.
-* There is an abstract property that contains the product category as a string.
-* There is a function that prints information about the product.
+* コンストラクタには、製品の `name` と `price` を指定するための 2 つのパラメータがあります。
+* 製品カテゴリを文字列として格納する抽象プロパティがあります。
+* 製品に関する情報を表示する機能があります。
 
-Let's create a child class for electronics. Before you define an implementation for the `category` property in the child class,
-you must use the `override` keyword:
+エレクトロニクス用の派生クラス`Electronic`を作成しましょう。
+子クラスで `category` プロパティの実装を定義する前に、`override` キーワードを使用する必要があります：
 
 ```kotlin
 class Electronic(name: String, price: Double, val warranty: Int) : Product(name, price) {
@@ -101,20 +105,20 @@ class Electronic(name: String, price: Double, val warranty: Int) : Product(name,
 }
 ```
 
-The `Electronic` class:
+`Electronic` クラス：
 
-* Inherits from the `Product` abstract class.
-* Has an additional parameter in the constructor: `warranty`, which is specific to electronics.
-* Overrides the `category` property to contain the string `"Electronic"`.
+* `Product` 抽象クラスを継承しています。
+* コンストラクタに、電子機器特有の追加パラメータ `warranty` が用意されています。
+* `category` プロパティを上書きし、文字列 `「Electronic」` を設定します。
 
-Now, you can use these classes like this:
+さて、これらのクラスは次のように使用できます：
 
 ```kotlin
 abstract class Product(val name: String, var price: Double) {
-    // Abstract property for the product category
+    // 商品カテゴリの抽象プロパティ
     abstract val category: String
 
-    // A function that can be shared by all products
+    // すべての製品で共有できる関数
     fun productInfo(): String {
         return "Product: $name, Category: $category, Price: $price"
     }
@@ -126,49 +130,50 @@ class Electronic(name: String, price: Double, val warranty: Int) : Product(name,
 
 //sampleStart
 fun main() {
-    // Creates an instance of the Electronic class
+    // Electronicクラスのインスタンスを作成します
     val laptop = Electronic(name = "Laptop", price = 1000.0, warranty = 2)
 
-    println(laptop.productInfo())
-    // Product: Laptop, Category: Electronic, Price: 1000.0
+    println(laptop.productInfo())   // Product: Laptop, Category: Electronic, Price: 1000.0
 }
 //sampleEnd
 ```
 {kotlin-runnable="true" id="kotlin-tour-abstract-class"}
 
-Although abstract classes are great for sharing code in this way, they are restricted because classes in Kotlin
-only support single inheritance. If you need to inherit from multiple sources, consider using interfaces.
+抽象クラスはこのような形でコードを共有するのに非常に便利ですが、Kotlinのクラスは単一継承しかサポートしていないため、その活用には制限があります。
+複数のソースから継承する必要がある場合は、インターフェースの使用を検討してください。
 
 ## Interfaces
+## インターフェース
 
-Interfaces are similar to classes, but they have some differences:
+インターフェースはクラスと似ていますが、いくつかの違いがあります：
 
-* You can't create an instance of an interface. They don't have a constructor or header.
-* Their functions and properties are implicitly inheritable by default. In Kotlin, we say that they are "open."
-* You don't need to mark their functions as `abstract` if you don't give them an implementation.
+* インターフェースのインスタンスを作成することはできません。
+それらはコンストラクタもヘッダーもありません。
+* それらの関数やプロパティは、デフォルトで暗黙的に継承可能です。Kotlinでは、これらは「オープン」であると言います。
+* 関数に実装を定義しない場合は、その関数を `abstract` としてマークする必要はありません。
 
-Similar to abstract classes, you use interfaces to define a set of functions and properties that classes can inherit and
-implement later. This approach helps you focus on the abstraction described by the interface, rather than the specific
-implementation details. Using interfaces makes your code:
+抽象クラスと同様に、インターフェースを使用することで、クラスが後で継承・実装できる一連の関数やプロパティを定義します。
+このアプローチにより、具体的な実装の詳細ではなく、インターフェースによって定義される抽象概念に焦点を当てることができます。
+インターフェースを使用すると、コードは次のような特徴を持つようになります：
 
-* More modular, as it isolates different parts, allowing them to evolve independently.
-* Easier to understand by grouping related functions into a cohesive set.
-* Easier to test, as you can quickly swap an implementation with a mock for testing.
+* 各部分を分離し、それぞれが独立して進化できるようにするため、よりモジュール化が進んでいる。
+* 関連する関数をまとまりのあるグループにまとめることで、理解しやすくなる。
+* テストが容易になります。テストの際、実装をモックと素早く置き換えることができるからです。
 
-To declare an interface, use the `interface` keyword:
+インターフェースを宣言するには、`interface` キーワードを使用します：
 
 ```kotlin
 interface PaymentMethod
 ```
 
 ### Interface implementation
+### インターフェースの実装
 
-Interfaces support multiple inheritance so a class can implement multiple interfaces at once. First, let's consider
-the scenario where a class implements **one** interface.
+インターフェースは多重継承をサポートしているため、クラスは一度に複数のインターフェースを実装することができます。
+まず、クラスが**1つ**のインターフェースを実装しているケースについて考えてみましょう。
 
-To create a class that implements an interface, add a colon after your class header, followed by the interface name
-that you want to implement. You don't use parentheses `()` after the interface name because interfaces don't have a 
-constructor:
+インターフェースを実装するクラスを作成するには、クラスヘッダーの後にコロンを付け、その後に実装したいインターフェース名を記述します。
+インターフェースにはコンストラクタがないため、インターフェース名の後に括弧 `()` は付けません：
 
 ```kotlin
 class CreditCardPayment : PaymentMethod
@@ -178,13 +183,13 @@ For example:
 
 ```kotlin
 interface PaymentMethod {
-    // Functions are inheritable by default
+    // 関数はデフォルトで継承可能です
     fun initiatePayment(amount: Double): String
 }
 
 class CreditCardPayment(val cardNumber: String, val cardHolderName: String, val expiryDate: String) : PaymentMethod {
     override fun initiatePayment(amount: Double): String {
-        // Simulate processing payment with credit card
+        // クレジットカードによる支払いの処理をシミュレートする
         return "Payment of $$amount initiated using Credit Card ending in ${cardNumber.takeLast(4)}."
     }
 }
@@ -192,27 +197,26 @@ class CreditCardPayment(val cardNumber: String, val cardHolderName: String, val 
 fun main() {
     val paymentMethod = CreditCardPayment("1234 5678 9012 3456", "John Doe", "12/25")
     println(paymentMethod.initiatePayment(100.0))
-    // Payment of $100.0 initiated using Credit Card ending in 3456.
+    // 末尾が3456のクレジットカードを使用して、100.0ドルの支払いが開始されました。
 }
 ```
 {kotlin-runnable="true" id="kotlin-tour-interface-inheritance"}
 
-In the example:
+この例では：
 
-* `PaymentMethod` is an interface that has an `initiatePayment()` function without an implementation.
-* `CreditCardPayment` is a class that implements the `PaymentMethod` interface.
-* The `CreditCardPayment` class overrides the inherited `initiatePayment()` function.
-* `paymentMethod` is an instance of the `CreditCardPayment` class.
-* The overridden `initiatePayment()` function is called on the `paymentMethod` instance with a parameter of `100.0`.
+* `PaymentMethod` は、実装のない `initiatePayment()` 関数を持つインターフェースです。
+* `CreditCardPayment` は、`PaymentMethod` インターフェースを実装するクラスです。
+* `CreditCardPayment` クラスは、継承された `initiatePayment()` 関数をオーバーライドしています。
+* `paymentMethod` は `CreditCardPayment` クラスのインスタンスです。
+* オーバーライドされた `initiatePayment()` 関数は、`paymentMethod` インスタンスに対して、パラメータ `100.0` を引数として呼び出されます。
 
-To create a class that implements **multiple** interfaces, add a colon after your class header followed by the name of the interfaces
-that you want to implement separated by a comma:
+**複数の**インターフェースを実装するクラスを作成するには、クラスヘッダーの後にコロンを付け、その後に実装したいインターフェース名をコンマで区切って記述します。
 
 ```kotlin
 class CreditCardPayment : PaymentMethod, PaymentType
 ```
 
-For example:
+例えば：
 
 ```kotlin
 interface PaymentMethod {
@@ -223,8 +227,7 @@ interface PaymentType {
     val paymentType: String
 }
 
-class CreditCardPayment(val cardNumber: String, val cardHolderName: String, val expiryDate: String) : PaymentMethod,
-    PaymentType {
+class CreditCardPayment(val cardNumber: String, val cardHolderName: String, val expiryDate: String) : PaymentMethod, PaymentType {
     override fun initiatePayment(amount: Double): String {
         // Simulate processing payment with credit card
         return "Payment of $$amount initiated using Credit Card ending in ${cardNumber.takeLast(4)}."
@@ -236,37 +239,37 @@ class CreditCardPayment(val cardNumber: String, val cardHolderName: String, val 
 fun main() {
     val paymentMethod = CreditCardPayment("1234 5678 9012 3456", "John Doe", "12/25")
     println(paymentMethod.initiatePayment(100.0))
-    // Payment of $100.0 initiated using Credit Card ending in 3456.
+    // 末尾が3456のクレジットカードを使用して、100.0ドルの支払いが開始されました。
 
     println("Payment is by ${paymentMethod.paymentType}")
-    // Payment is by Credit Card
+    // お支払いはクレジットカードでお願いいたします
 }
 ```
 {kotlin-runnable="true" id="kotlin-tour-interface-multiple-inheritance"}
 
-In the example:
+この例では：
 
-* `PaymentMethod` is an interface that has the `initiatePayment()` function without an implementation.
-* `PaymentType` is an interface that has the `paymentType` property that isn't initialized.
-* `CreditCardPayment` is a class that implements the `PaymentMethod` and `PaymentType` interfaces.
-* The `CreditCardPayment` class overrides the inherited `initiatePayment()` function and the `paymentType` property.
-* `paymentMethod` is an instance of the `CreditCardPayment` class.
-* The overridden `initiatePayment()` function is called on the `paymentMethod` instance with a parameter of `100.0`.
-* The overridden `paymentType` property is accessed on the `paymentMethod` instance.
+* `PaymentMethod` は、実装のない `initiatePayment()` 関数を持つインターフェースです。
+* `PaymentType` は、初期化されていない `paymentType` プロパティを持つインターフェースです。
+* `CreditCardPayment` は、`PaymentMethod` および `PaymentType` インターフェースを実装するクラスです。
+* `CreditCardPayment` クラスは、継承された `initiatePayment()` 関数と `paymentType` プロパティをオーバーライドしています。
+* `paymentMethod` は `CreditCardPayment` クラスのインスタンスです。
+* オーバーライドされた `initiatePayment()` 関数は、`paymentMethod` インスタンスに対して、パラメータ `100.0` を引数として呼び出されます。
+* オーバーライドされた `paymentType` プロパティは、`paymentMethod` インスタンス上で参照されます。
 
-For more information about interfaces and interface inheritance, see [Interfaces](interfaces.md).
+インターフェースおよびインターフェースの継承に関する詳細については、[インターフェース](interfaces.md)を参照してください。
 
 ## Delegation
+## 委譲
 
-Interfaces are useful, but if your interface contains many functions, its child classes can end up with a lot of 
-boilerplate code. If you only want to override a small part of a class's behavior, you need to repeat yourself a lot.
+インターフェースは便利ですが、インターフェースに多くの関数が含まれていると、その子クラスには大量の定型コードが含まれてしまう可能性があります。
+クラスの動作のごく一部だけを上書きしたい場合、同じコードを何度も繰り返さなければなりません。
 
-> Boilerplate code is a chunk of code that is reused with little or no alteration in multiple parts of a software project.
+> ボイラープレートコードとは、ソフトウェアプロジェクトの複数の箇所で、ほとんど、あるいはまったく変更を加えることなく再利用されるコードの塊のことです。
 > 
 {style="tip"}
 
-For example, let's say that you have an interface called `DrawingTool` that contains a number of functions and one property
-called `color`:
+たとえば、`DrawingTool` という名前のインターフェースがあり、そこにいくつかの関数と `color` というプロパティが1つ含まれているとします：
 
 ```kotlin
 interface DrawingTool {
@@ -277,8 +280,7 @@ interface DrawingTool {
 }
 ```
 
-You create a class called `PenTool` which implements the `DrawingTool` interface and provides implementations for all of
-its members:
+`PenTool` というクラスを作成します。このクラスは `DrawingTool` インターフェースを実装し、そのすべてのメンバに対する実装を提供します：
 
 ```kotlin
 class PenTool : DrawingTool {
@@ -298,11 +300,11 @@ class PenTool : DrawingTool {
 }
 ```
 
-You want to create a class like `PenTool` with the same behavior but a different `color` value. 
-One approach is to create a new class that expects an object implementing the `DrawingTool` interface as a parameter,
-like a `PenTool` class instance. Then, inside the class, you can override the `color` property.
+`PenTool` と同じ動作をするが、`color` の値が異なるクラスを作成したいのです。
+一つの方法は、`DrawingTool` インターフェースを実装するオブジェクトをパラメータとして受け取る新しいクラスを作成することです。
+たとえば、`PenTool` クラスのインスタンスのように。そうすれば、そのクラス内で `color` プロパティをオーバーライドすることができます。
 
-But in this scenario, you need to add implementations for each member of the `DrawingTool` interface:
+しかし、このシナリオでは、`DrawingTool` インターフェースの各メンバーに対して実装を追加する必要があります：
 
 ```kotlin
 interface DrawingTool {
@@ -366,22 +368,22 @@ fun main() {
 ```
 {kotlin-runnable="true" id="kotlin-tour-interface-non-delegation"}
 
-You can see that if you have a large number of member functions in the `DrawingTool` interface, the amount of boilerplate
-code in the `CanvasSession` class can be large. However, there is an alternative.
+`DrawingTool` インターフェースに多数のメンバ関数があると、`CanvasSession` クラス内の定型コードの量が多くなってしまうことがわかります。しかし、別の方法もあります。
 
-In Kotlin, you can delegate the interface implementation to a class instance using the `by` keyword. For example:
+Kotlin では、`by` キーワードを使用して、インターフェースの実装をクラスのインスタンスに委譲することができます。例えば：
 
 ```kotlin
 class CanvasSession(val tool: DrawingTool) : DrawingTool by tool
 ```
 
-Here, `tool` is the name of the `PenTool` class instance where the implementations of member functions are delegated to.
+ここで、`tool` は、メンバ関数の実装が委譲される `PenTool` クラスのインスタンスの名前です。
 
-Now you don't have to add implementations for the member functions in the `CanvasSession` class. The compiler does
-this for you automatically from the `PenTool` class. This saves you from having to write a lot of boilerplate code. Instead,
-you add code only for the behavior you want to change for your child class. 
+これで、`CanvasSession` クラスのメンバ関数に対して実装を追加する必要はなくなりました。
+コンパイラが `PenTool` クラスから自動的にこれを行ってくれます。
+これにより、大量の定型コードを書く手間が省けます。
+その代わりに、子クラスで変更したい動作についてのみコードを追加します。
 
-For example, if you want to change the value of the `color` property:
+たとえば、`color` プロパティの値を変更したい場合は：
 
 ```kotlin
 interface DrawingTool {
@@ -409,7 +411,7 @@ class PenTool : DrawingTool {
 
 //sampleStart
 class CanvasSession(val tool: DrawingTool) : DrawingTool by tool {
-    // No boilerplate code!
+    // 定型コードは不要！
     override val color: String = "blue"
 }
 //sampleEnd
@@ -435,35 +437,31 @@ fun main() {
 ```
 {kotlin-runnable="true" id="kotlin-tour-interface-delegation"}
 
-If you want to, you can also override the behavior of an inherited member function in the `CanvasSession` class, but now
-you don't have to add new lines of code for every inherited member function.
+必要であれば、`CanvasSession` クラスから継承されたメンバ関数の動作を上書きすることもできますが、これで、継承されたメンバ関数ごとに新しいコード行を追加する必要はなくなりました。
 
-For more information, see [Delegation](delegation.md).
+詳細については、[委譲(delegation)](delegation.md)を参照してください。
 
-## Practice {completion-point="true"}
+## 演習 {completion-point="true"}
 
-### Exercise 1 {initial-collapse-state="collapsed" collapsible="true" id="classes-interfaces-exercise-1"}
+### 課題 1 {initial-collapse-state="collapsed" collapsible="true" id="classes-interfaces-exercise-1"}
 
-Imagine you're working on a smart home system. A smart home typically has different types of devices that all have some
-basic features but also unique behaviors. In the code sample below, complete the `abstract` class called `SmartDevice` 
-so that the child class `SmartLight` can compile successfully.
+スマートホームシステムの開発に取り組んでいると想像してみてください。
+スマートホームには通常、さまざまな種類のデバイスが導入されており、それらはすべて基本的な機能を備えている一方で、それぞれ独自の動作特性も持っています。
+以下のコードサンプルで、子クラス `SmartLight` が正常にコンパイルされるように、`SmartDevice` という名前の `abstract` クラスを完成させてください。
 
-Then, create another child class called `SmartThermostat` that inherits from the `SmartDevice` class and implements 
-`turnOn()` and `turnOff()` functions that return print statements describing which thermostat is heating or turned off.
-Finally, add another function called `adjustTemperature()` that accepts a temperature measurement as an input and prints:
-`$name thermostat set to $temperature°C.`
+次に、`SmartDevice` クラスを継承し、どのサーモスタットが暖房中か、あるいはオフになっているかを説明する print 文を返す `turnOn()` および `turnOff()` 関数を実装した、`SmartThermostat` という名前の子クラスをもう1つ作成してください。
+最後に、温度の測定値を入力として受け取り、`$name サーモスタットが $temperature°C に設定されました。`と出力する `adjustTemperature()` という関数を追加してください。
 
 <deflist collapsible="true">
     <def title="Hint">
-        In the <code>SmartDevice</code> class, add the <code>turnOn()</code> and <code>turnOff()</code> functions so that 
-        you can override their behavior later in the <code>SmartThermostat</code> class.
+        <code>SmartDevice</code> クラスに、<code>turnOn()</code> および <code>turnOff()</code> 関数を追加してください。これにより、後で <code>SmartThermostat</code> クラスでこれらの動作をオーバーライドできるようになります。
     </def>
 </deflist>
 
 |--|--|
 
 ```kotlin
-abstract class // Write your code here
+abstract class // ここにコードを入力してください
 
 class SmartLight(name: String) : SmartDevice(name) {
     override fun turnOn() {
@@ -479,25 +477,25 @@ class SmartLight(name: String) : SmartDevice(name) {
     }
 }
 
-class SmartThermostat // Write your code here
+class SmartThermostat // ここにコードを入力してください
 
 fun main() {
     val livingRoomLight = SmartLight("Living Room Light")
     val bedroomThermostat = SmartThermostat("Bedroom Thermostat")
     
     livingRoomLight.turnOn()
-    // Living Room Light is now ON.
+    // リビングの照明が点灯しました。
     livingRoomLight.adjustBrightness(10)
-    // Adjusting Living Room Light brightness to 10%.
+    // リビングの照明の明るさを10%に調整します。
     livingRoomLight.turnOff()
-    // Living Room Light is now OFF.
+    // リビングの照明は現在消えています。
 
     bedroomThermostat.turnOn()
-    // Bedroom Thermostat thermostat is now heating.
+    // 寝室のサーモスタットが現在、暖房運転中です。
     bedroomThermostat.adjustTemperature(5)
-    // Bedroom Thermostat thermostat set to 5°C.
+    // 寝室のサーモスタットは5°Cに設定されています。
     bedroomThermostat.turnOff()
-    // Bedroom Thermostat thermostat is now off.
+    // 寝室のサーモスタットは現在オフになっています。
 }
 ```
 {validate="false" kotlin-runnable="true" kotlin-min-compiler-version="1.3" id="kotlin-tour-classes-interfaces-exercise-1"}
@@ -543,37 +541,35 @@ fun main() {
     val bedroomThermostat = SmartThermostat("Bedroom Thermostat")
     
     livingRoomLight.turnOn()
-    // Living Room Light is now ON.
+    // リビングの照明が点灯しました。
     livingRoomLight.adjustBrightness(10)
-    // Adjusting Living Room Light brightness to 10%.
+    // リビングの照明の明るさを10%に調整します。
     livingRoomLight.turnOff()
-    // Living Room Light is now OFF.
+    // リビングの照明は現在オフになっています。
 
     bedroomThermostat.turnOn()
-    // Bedroom Thermostat thermostat is now heating.
+    // 寝室のサーモスタットは現在、暖房運転中です。
     bedroomThermostat.adjustTemperature(5)
-    // Bedroom Thermostat thermostat set to 5°C.
+    // 寝室のサーモスタットを5°Cに設定しました。
     bedroomThermostat.turnOff()
-    // Bedroom Thermostat thermostat is now off.
+    // 寝室のサーモスタットは現在オフになっています。
 }
 ```
 {initial-collapse-state="collapsed" collapsible="true" collapsed-title="Example solution" id="kotlin-tour-classes-interfaces-solution-1"}
 
-### Exercise 2 {initial-collapse-state="collapsed" collapsible="true" id="classes-interfaces-exercise-2"}
+### 課題 2 {initial-collapse-state="collapsed" collapsible="true" id="classes-interfaces-exercise-2"}
 
-Create an interface called `Media` that you can use to implement specific media classes like `Audio`, `Video`, or 
-`Podcast`. Your interface must include:
+`Audio`、`Video`、`Podcast` などの特定のメディアクラスを実装するために使用できる `Media` というインターフェースを作成してください。このインターフェースには、以下の要素を含める必要があります：
 
-* A property called `title` to represent the title of the media.
-* A function called `play()` to play the media.
+* メディアのタイトルを表す `title` というプロパティ。
+* メディアを再生するための `play()` という関数。
 
-Then, create a class called `Audio` that implements the `Media` interface. The `Audio` class must use the `title` property
-in its constructor as well as have an additional property called `composer` that has `String` type. In the class, implement
-the `play()` function to print the following: `"Playing audio: $title, composed by $composer"`.
+次に、`Media` インターフェースを実装する `Audio` というクラスを作成します。
+`Audio` クラスは、コンストラクタ内で `title` プロパティを使用するとともに、`String` 型の `composer` というプロパティを追加で持つ必要があります。このクラス内で、`play()` 関数を実装し、`「Playing audio: $title, composed by $composer」` と出力するようにしてください。
 
 <deflist collapsible="true">
     <def title="Hint">
-        You can use the <code>override</code> keyword in class headers to implement a property from an interface in the constructor.
+        クラスのヘッダーで <code>override</code> キーワードを使用すると、コンストラクタ内でインターフェースのプロパティを実装することができます。
     </def>
 </deflist>
 
@@ -614,20 +610,20 @@ fun main() {
 
 ### Exercise 3 {initial-collapse-state="collapsed" collapsible="true" id="classes-interfaces-exercise-3"}
 
-You're building a payment processing system for an e-commerce application. Each payment method needs to be able to 
-authorize a payment and process a transaction. Some payments also need to be able to process refunds.
+あなたは、eコマースアプリケーション向けの決済処理システムを構築しています。
+各決済手段は、支払いの承認と取引の処理が可能でなければなりません。
+また、一部の支払いについては、払い戻しを処理できる必要がある場合もあります。
 
-1. In the `Refundable` interface, add a function called `refund()` to process refunds.
+1. `Refundable` インターフェースに、払い戻しを処理するための `refund()` という関数を追加してください。
 
-2. In the `PaymentMethod` abstract class:
-   * Add a function called `authorize()` that takes an amount and prints a message containing the amount.
-   * Add an abstract function called `processPayment()` that also takes an amount.
+2. `PaymentMethod` 抽象クラスでは：
+   * `authorize()` という関数を追加し、金額を受け取り、その金額を含むメッセージを出力するようにしてください。
+   * `processPayment()` という名前の、金額を引数として受け取る抽象関数を追加してください。
 
-3. Create a class called `CreditCard` that implements the `Refundable` interface and `PaymentMethod` abstract class.
-In this class, add implementations for the `refund()` and `processPayment()` functions so that they print the following 
-statements:
-   * `"Refunding $amount to the credit card."`
-   * `"Processing credit card payment of $amount."`
+3. `Refundable` インターフェースと `PaymentMethod` 抽象クラスを実装する `CreditCard` というクラスを作成してください。
+このクラスでは、`refund()` および `processPayment()` 関数の実装を追加し、以下の文を出力するようにしてください：
+   * `「$amountをクレジットカードに返金します。」`
+   * `「$amountのクレジットカード決済を処理中です。」`
 
 |---|---|
 ```kotlin
@@ -691,19 +687,17 @@ fun main() {
 ```
 {initial-collapse-state="collapsed" collapsible="true" collapsed-title="Example solution" id="kotlin-tour-classes-interfaces-solution-3"}
 
-### Exercise 4 {initial-collapse-state="collapsed" collapsible="true" id="classes-interfaces-exercise-4"}
+### 課題 4 {initial-collapse-state="collapsed" collapsible="true" id="classes-interfaces-exercise-4"}
 
-You have a simple messaging app that has some basic functionality, but you want to add some functionality for 
-_smart_ messages without significantly duplicating your code.
+基本的な機能を備えたシンプルなメッセージングアプリがありますが、コードを大幅に重複させることなく、_スマート_なメッセージのための機能をいくつか追加したいと考えています。
 
-In the code below, define a class called `SmartMessenger` that inherits from the `Messenger` interface but delegates 
-the implementation to an instance of the `BasicMessenger` class. 
+以下のコードでは、`Messenger` インターフェースを継承しつつ、実装を `BasicMessenger` クラスのインスタンスに委譲する `SmartMessenger` というクラスを定義してください。
 
-In the `SmartMessenger` class, override the `sendMessage()` function to send smart messages. The function must accept
-a `message` as an input and return a printed statement: `"Sending a smart message: $message"`. In addition, call the 
-`sendMessage()` function from the `BasicMessenger` class and prefix the message with `[smart]`.
+`SmartMessenger` クラスで、`sendMessage()` 関数をオーバーライドして、スマートメッセージを送信するようにします。
+この関数は、入力として `message` を受け取り、出力として `「Sending a smart message: $message」` を返す必要があります。
+さらに、`BasicMessenger` クラスの `sendMessage()` 関数を呼び出し、メッセージの先頭に `[smart]` を付け加えます。
 
-> You don't need to rewrite the `receiveMessage()` function in the `SmartMessenger` class.
+> `SmartMessenger` クラス内の `receiveMessage()` 関数を書き直す必要はありません。
 > 
 {style="note"}
 
@@ -785,9 +779,9 @@ fun main() {
 
 <list columns="2" id="tour-nav">
   <li>
-    <a as="button" href="kotlin-tour-intermediate-lambdas-receiver.md" mode="outline" icon="arrow-left" icon-position="left">Previous step</a>
+    <a as="button" href="kotlin-tour-intermediate-lambdas-receiver_jp.md" mode="outline" icon="arrow-left" icon-position="left">Previous step</a>
   </li>
   <li>
-    <a as="button" href="kotlin-tour-intermediate-objects.md" mode="classic" icon="arrow-right" icon-position="right">Next step</a>
+    <a as="button" href="kotlin-tour-intermediate-objects_jp.md" mode="classic" icon="arrow-right" icon-position="right">Next step</a>
   </li>
 </list>
