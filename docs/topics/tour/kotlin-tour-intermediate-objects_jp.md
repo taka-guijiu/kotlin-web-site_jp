@@ -28,7 +28,7 @@ object DoAuth {}
 
 `object` の名前の後に、中括弧 `{}` で囲まれたオブジェクト本体内に、プロパティやメンバ関数を追加します。
 
-> オブジェクトにはコンストラクタがないため、クラスのようなヘッダーファイルはありません。
+> オブジェクトにはコンストラクタがないため、クラスのようなヘッダーはありません。
 >
 {style="note"}
 
@@ -50,7 +50,7 @@ fun main(){
 {kotlin-runnable="true" id="kotlin-tour-object-declarations"}
 
 このオブジェクトには、`takeParams` というメンバー関数があり、この関数は `username` と `password` という変数を引数として受け取り、コンソールに文字列を出力します。
-The `DoAuth` object is only created when the function is called for the first time.
+`DoAuth` オブジェクトは、関数が初めて呼び出されたときにのみ作成されます。
 
 > オブジェクトはクラスやインターフェースから継承することができます。例えば：
 > 
@@ -72,8 +72,7 @@ The `DoAuth` object is only created when the function is called for the first ti
 #### データオブジェクト
 
 オブジェクト宣言の内容を印刷しやすくするために、Kotlinには**data**オブジェクトが用意されています。
-初心者向けツアーで学んだデータクラスと同様に、データオブジェクトには自動的に追加のメンバ関数が備わっています： 
-`toString()` and `equals()`.
+初心者向けツアーで学んだデータクラスと同様に、データオブジェクトには自動的に追加のメンバ関数 `toString()` と `equals()` が備わっています。
 
 > データクラスとは異なり、データオブジェクトには `copy()` メンバ関数が自動的に用意されていません。これは、データオブジェクトにはコピーできない単一のインスタンスしか存在しないためです。
 >
@@ -299,7 +298,7 @@ fun main() {
 
 <deflist collapsible="true">
     <def title="Hint">
-        Add an email validation function in a companion object for the `User` class so that you can call the function directly on `User`.
+        `User` クラスのコンパニオンオブジェクトにメールアドレスの有効性チェック機能を追加し、`User` クラス上でその関数を直接呼び出せるようにしてください。
     </def>
 </deflist>
 
@@ -359,7 +358,8 @@ fun main() {
 {initial-collapse-state="collapsed" collapsible="true" collapsed-title="Example solution" id="kotlin-tour-objects-solution-3"}
 
 > この演習の延長として、コンパニオンオブジェクト内の関数をファクトリメソッドとして使い、クラスのインスタンスを作成してみてください。
-> For an example and more information about this pattern, see [オブジェクトの宣言と式(Object declarations and expressions)](object-declarations.md#companion-objects).
+> このパターンの例や詳細については、[オブジェクトの宣言と式（Object declarations and expressions）](object-declarations.md#companion-objects) を見てください。
+
 >
 {style="tip"}
 

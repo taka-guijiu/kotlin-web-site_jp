@@ -4,7 +4,7 @@
 
 (索引の語), (章の名称), (ページ)
 
-## intermediate-classes-interfaces
+## intermediate-classes-interfaces_jp
 単一継承,   intermediate-classes-interfaces,  1
 親クラス,   intermediate-classes-interfaces,    1
 親,   intermediate-classes-interfaces,  1   
@@ -29,9 +29,21 @@ byキーワード,   intermediate-classes-interfaces,    9
 クラス委譲,   intermediate-classes-interfaces,    
 ,   intermediate-classes-interfaces,    
 ,   intermediate-classes-interfaces,    
-,   intermediate-classes-interfaces,    
-,   intermediate-classes-interfaces,    
-,   intermediate-classes-interfaces,    
-,   intermediate-classes-interfaces,    
 
+
+## intermediate-objects_jp
+lazy,   intermediate-objects_jp,    1
+遅延評価,   intermediate-objects_jp,    1
+objectキーワード,   intermediate-objects_jp,    1
+クラスのヘッダ,   intermediate-objects_jp,    1
+ヘッダ（クラスの）,   intermediate-objects_jp,    1
+dataキーワード(data object),   intermediate-objects_jp,    2
+data object,   intermediate-objects_jp,    2
+データオブジェクト,   intermediate-objects_jp,    2
+関連オブジェクト,   intermediate-objects_jp,    3
+コンパニオンオブジェクト,   intermediate-objects_jp,    3
+companion object,   intermediate-objects_jp,    3
+companionキーワード,   intermediate-objects_jp,    3
+,   intermediate-objects_jp,    
+,   intermediate-objects_jp,  
 
