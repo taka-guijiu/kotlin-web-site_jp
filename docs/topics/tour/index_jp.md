@@ -30,7 +30,47 @@ var,   hello-world_jp.md,  1
 ,   basic-types_jp,     
 
 
-
+## collections_jp
+コレクション,   collections_jp,     1
+Collections,   collections_jp,     1
+要素,   collections_jp,     1
+List,   collections_jp,     1
+リスト,   collections_jp,     1
+MutableList,   collections_jp,     1
+listOf()関数,   collections_jp,     1
+mutableListOf,   collections_jp,     1
+キャスティング,   collections_jp,     2
+インデックスアクセス演算子,   collections_jp,     2,6
+first()（Listの関数）,   collections_jp,     2
+last()（Listの関数）,   collections_jp,     2
+count()（Listの関数）,   collections_jp,     2
+add()（Listの関数）,   collections_jp,     3
+remove()（Listの関数）,   collections_jp,     3
+Set,   collections_jp,     3
+セット,   collections_jp,     3
+setOf()関数,   collections_jp,     3
+MutableSet,   collections_jp,     3
+mutableSetOf()関数,   collections_jp,     3
+count()（Setの関数）,   collections_jp,     4
+in演算子   ,   collections_jp,     5,8
+add()（Setの関数）,   collections_jp,     5
+remove()（Setの関数）,   collections_jp,     5
+Map,   collections_jp,     5
+マップ,   collections_jp,    5 
+mapOf()関数,   collections_jp,     5
+MutableMap,   collections_jp,     5
+mutableMapOf()関数,   collections_jp,     5
+キー（Mapの）,   collections_jp,     6
+ミュータブルマップ,   collections_jp,     5,7
+可変マップ,   collections_jp,     5,7
+count()（Mapの関数）,   collections_jp,     7
+containsKey()（Mapの関数）,   collections_jp,     8
+keys（Mapのプロパティ）,   collections_jp,     8
+values（Mapのプロパティ）,   collections_jp,     8
+,   collections_jp,     
+,   collections_jp,     
+,   collections_jp,     
+,   collections_jp,     
 
 
 

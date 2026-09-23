@@ -5,7 +5,7 @@
 
 プログラミングを行う際、後で処理するためにデータを構造化してまとめることができると便利です。Kotlinでは、まさにこの目的のためにコレクションが用意されています。
 
-Kotlin has the following collections for grouping items:
+Kotlin には、要素をグループ化するための以下のコレクションがあります：
 
 | **コレクションの種類** | **説明**                                                         |
 |---------------------|-------------------------------------------------------------------------|
@@ -201,7 +201,7 @@ fun main() {
 ```
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3" id="kotlin-tour-set-in"}
 
-可変セットに要素を追加または削除するには、[`.add()`] (https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-set/add.html) および [`.remove()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/remove.html) 関数をそれぞれ使用します:
+可変セットに要素を追加または削除するには、[`.add()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-set/add.html) および [`.remove()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/remove.html) 関数をそれぞれ使用します:
 
 ```kotlin
 fun main() { 
