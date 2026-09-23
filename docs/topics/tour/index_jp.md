@@ -28,7 +28,25 @@ with,   intermediate-extension-functions_jp,    1,7
 ,   intermediate-extension-functions_jp,    
 
 
-## 
+## intermediate-lambdas-receiver_jp
+レシーバー,   intermediate-lambdas-receiver_jp   ,   1
+ラムダ式,   intermediate-lambdas-receiver_jp   ,   1
+Lambda expressions,   intermediate-lambdas-receiver_jp   ,   1
+Receiver,   intermediate-lambdas-receiver_jp   ,   1
+関数リテラル,   intermediate-lambdas-receiver_jp   ,   1
+無名関数,   intermediate-lambdas-receiver_jp   ,   1
+DSL,   intermediate-lambdas-receiver_jp   ,   2
+ドメイン固有言語,   intermediate-lambdas-receiver_jp   ,   2
+型安全なビルダー,   intermediate-lambdas-receiver_jp   ,   4
+,   intermediate-lambdas-receiver_jp   ,   
+,   intermediate-lambdas-receiver_jp   ,   
+,   intermediate-lambdas-receiver_jp   ,   
+,   intermediate-lambdas-receiver_jp   ,   
+,   intermediate-lambdas-receiver_jp   ,   
+,   intermediate-lambdas-receiver_jp   ,   
+,   intermediate-lambdas-receiver_jp   ,   
+,   intermediate-lambdas-receiver_jp   ,   
+
 
 
 
