@@ -47,3 +47,32 @@ companionキーワード,   intermediate-objects_jp,    3
 ,   intermediate-objects_jp,    
 ,   intermediate-objects_jp,  
 
+## intermediate-open-special-classes_jp
+openキーバード,   intermediate-open-special-classes_jp,   1
+open class,   intermediate-open-special-classes_jp,   1
+オープンクラス,   intermediate-open-special-classes_jp,   1
+open,   intermediate-open-special-classes_jp,   2
+overrideキーワード（関数funの）,   intermediate-open-special-classes_jp,   2
+sealedキーワード,   intermediate-open-special-classes_jp,   4
+Sealed class,   intermediate-open-special-classes_jp,   4
+シールドクラス,   intermediate-open-special-classes_jp,   4
+パッケージ,   intermediate-open-special-classes_jp,   4
+Enum class,   intermediate-open-special-classes_jp,   6
+列挙型クラス,   intermediate-open-special-classes_jp,   6
+enumキーワード,   intermediate-open-special-classes_jp, 6   
+enum class,   intermediate-open-special-classes_jp,   6
+列挙定数,   intermediate-open-special-classes_jp,   6
+thisキーワード,   intermediate-open-special-classes_jp,   7
+Inline Value Class,   intermediate-open-special-classes_jp,  8 
+インライン値い型,   intermediate-open-special-classes_jp,   8
+valueキーワード,   intermediate-open-special-classes_jp,   8
+@JvmInlineアノテーション,   intermediate-open-special-classes_jp,   8
+,   intermediate-open-special-classes_jp,   
+,   intermediate-open-special-classes_jp,   
+,   intermediate-open-special-classes_jp,   
+,   intermediate-open-special-classes_jp,   
+,   intermediate-open-special-classes_jp,   
+,   intermediate-open-special-classes_jp,   
+,   intermediate-open-special-classes_jp,   
+,   intermediate-open-special-classes_jp,   
+,   intermediate-open-special-classes_jp,   
