@@ -23,6 +23,11 @@ var,   hello-world_jp.md,  1
 ,   hello-world_jp.md,  
 
 
+## basic-types_jp
+型推論,   basic-types_jp,     1
+基本型,   basic-types_jp,     2
+,   basic-types_jp,     
+,   basic-types_jp,     
 
 
 
