@@ -20,7 +20,7 @@ Kotlinは、意図しない継承を防ぎ、クラスの保守性を高める�
 Kotlinのクラスは**単一継承**のみをサポートしており、つまり**一度に1つのクラス**からのみ継承することができます。
 このクラスは **親** と呼ばれます。
 
-The parent of a class inherits from another class (the grandparent), forming a hierarchy. 
+あるクラスの親クラスは、別のクラス（祖父母クラス）から継承され、階層構造を形成します。
 Kotlinのクラス階層の最上位には、共通の親クラスである `Any` があります。
 すべてのクラスは、最終的には `Any` クラスを継承しています：
 
@@ -368,9 +368,11 @@ fun main() {
 ```
 {kotlin-runnable="true" id="kotlin-tour-interface-non-delegation"}
 
-`DrawingTool` インターフェースに多数のメンバ関数があると、`CanvasSession` クラス内の定型コードの量が多くなってしまうことがわかります。しかし、別の方法もあります。
+`DrawingTool` インターフェースに多数のメンバ関数があると、`CanvasSession` クラス内の定型コードの量が多くなってしまうことがわかります。
+しかし、別の方法もあります。
 
-Kotlin では、`by` キーワードを使用して、インターフェースの実装をクラスのインスタンスに委譲することができます。例えば：
+Kotlin では、`by` キーワードを使用して、インターフェースの実装をクラスのインスタンスに委譲することができます。
+例えば：
 
 ```kotlin
 class CanvasSession(val tool: DrawingTool) : DrawingTool by tool
@@ -608,7 +610,7 @@ fun main() {
 ```
 {initial-collapse-state="collapsed" collapsible="true" collapsed-title="Example solution" id="kotlin-tour-classes-interfaces-solution-2"}
 
-### Exercise 3 {initial-collapse-state="collapsed" collapsible="true" id="classes-interfaces-exercise-3"}
+### 課題 3 {initial-collapse-state="collapsed" collapsible="true" id="classes-interfaces-exercise-3"}
 
 あなたは、eコマースアプリケーション向けの決済処理システムを構築しています。
 各決済手段は、支払いの承認と取引の処理が可能でなければなりません。
@@ -658,7 +660,7 @@ interface Refundable {
 
 abstract class PaymentMethod(val name: String) {
     fun authorize(amount: Double) {
-        println("Authorizing payment of $$amount.")
+        println("$$amount の支払いを承認します。")
     }
 
     abstract fun processPayment(amount: Double)
@@ -666,11 +668,11 @@ abstract class PaymentMethod(val name: String) {
 
 class CreditCard(name: String) : PaymentMethod(name), Refundable {
     override fun processPayment(amount: Double) {
-        println("Processing credit card payment of $$amount.")
+        println("$$amount のクレジットカード決済を処理中です。")
     }
 
     override fun refund(amount: Double) {
-        println("Refunding $$amount to the credit card.")
+        println("$$amount をクレジットカードに返金します。")
     }
 }
 
@@ -678,11 +680,11 @@ fun main() {
     val visa = CreditCard("Visa")
     
     visa.authorize(100.0)
-    // Authorizing payment of $100.0.
+    // 100.0ドルの支払いを承認する。
     visa.processPayment(100.0)
-    // Processing credit card payment of $100.0.
+    // 100.0ドルのクレジットカード決済を処理中です。
     visa.refund(50.0)
-    // Refunding $50.0 to the credit card.
+    // クレジットカードに50.0ドルを返金いたします。
 }
 ```
 {initial-collapse-state="collapsed" collapsible="true" collapsed-title="Example solution" id="kotlin-tour-classes-interfaces-solution-3"}
