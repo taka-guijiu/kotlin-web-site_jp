@@ -4,6 +4,25 @@
 
 (索引の語), (章の名称), (ページ)
 
+## intermediate-extension-functions_jp
+拡張関数,   intermediate-extension-functions_jp,    1
+レシーバ,   intermediate-extension-functions_jp,    1
+Extension関数,   intermediate-extension-functions_jp,    1
+Receiver,   intermediate-extension-functions_jp,    1
+,   intermediate-extension-functions_jp,    
+,   intermediate-extension-functions_jp,    
+
+
+## 
+
+
+
+
+
+## 
+
+
+
 ## intermediate-classes-interfaces_jp
 単一継承,   intermediate-classes-interfaces,  1
 親クラス,   intermediate-classes-interfaces,    1

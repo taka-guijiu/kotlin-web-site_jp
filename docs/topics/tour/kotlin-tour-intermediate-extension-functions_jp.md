@@ -102,7 +102,7 @@ fun main() {
 ```
 {validate="false"}
 
-この拡張指向のアプローチは、Kotlinの[標準ライブラリ](https://kotlinlang.org/api/latest/jvm/stdlib/)やその他のライブラリで広く採用されています。
+この拡張性重視のアプローチは、Kotlinの[標準ライブラリ](https://kotlinlang.org/api/latest/jvm/stdlib/)やその他のライブラリで広く採用されています。
 たとえば、`String` クラスには、文字列の操作に役立つ多くの [拡張関数](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/#extension-functions) が用意されています。
 
 For more information about extension functions, see [Extensions](extensions.md).
