@@ -205,7 +205,7 @@ fun main() {
 
 前回の `apply` 関数の例を続けてみましょう。ただし今回は、`connect()` 関数と `authenticate()` 関数をグループ化し、すべてのリクエストで呼び出されるようにします。
 
-For example:
+例えば:
 
 ```kotlin
 class Client() {

@@ -13,10 +13,19 @@ Receiver,   intermediate-extension-functions_jp,    1
 ,   intermediate-extension-functions_jp,    
 
 
-## 
-
-
-
+## intermediate-extension-functions_jp
+スコープ関数,   intermediate-extension-functions_jp,    1
+グローバルスコープ,   intermediate-extension-functions_jp,    1
+ローカルスコープ,   intermediate-extension-functions_jp,    1
+itキーワード,   intermediate-extension-functions_jp,    1
+thisキーワード,   intermediate-extension-functions_jp,    1
+let,   intermediate-extension-functions_jp,    
+apply,   intermediate-extension-functions_jp,    1,3
+run,   intermediate-extension-functions_jp,    1,5
+also,   intermediate-extension-functions_jp,    1,6
+with,   intermediate-extension-functions_jp,    1,7
+,   intermediate-extension-functions_jp,    
+,   intermediate-extension-functions_jp,    
 
 
 ## 
