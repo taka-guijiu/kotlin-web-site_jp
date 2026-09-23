@@ -4,6 +4,31 @@
 
 (索引の語), (章の名称), (ページ)
 
+## hello-world_jp
+変数,   hello-world_jp.md,  1
+関数,   hello-world_jp.md,  1
+main()関数,   hello-world_jp.md,  1
+関数の本体,   hello-world_jp.md,  1
+println(),   hello-world_jp.md,  1
+print(),   hello-world_jp.md,  1
+val,   hello-world_jp.md,  1
+var,   hello-world_jp.md,  1
+読取り専用の変数,   hello-world_jp.md, 1 
+変更可能な変数,   hello-world_jp.md,  1
+イミュータブルな変数,   hello-world_jp.md,  1
+ミュータブルな変数,   hello-world_jp.md,  1
+代入演算子,   hello-world_jp.md,  1
+文字列テンプレート,   hello-world_jp.md,  1
+,   hello-world_jp.md,  
+,   hello-world_jp.md,  
+
+
+
+
+
+
+
+
 ## intermediate-extension-functions_jp
 拡張関数,   intermediate-extension-functions_jp,    1
 レシーバ,   intermediate-extension-functions_jp,    1
