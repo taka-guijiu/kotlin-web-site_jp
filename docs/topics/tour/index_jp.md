@@ -70,9 +70,24 @@ valueキーワード,   intermediate-open-special-classes_jp,   8
 ,   intermediate-open-special-classes_jp,   
 ,   intermediate-open-special-classes_jp,   
 ,   intermediate-open-special-classes_jp,   
-,   intermediate-open-special-classes_jp,   
-,   intermediate-open-special-classes_jp,   
-,   intermediate-open-special-classes_jp,   
-,   intermediate-open-special-classes_jp,   
-,   intermediate-open-special-classes_jp,   
-,   intermediate-open-special-classes_jp,   
+
+
+## intermediate-libraries-and-apis_jp
+標準ライブラリ,   intermediate-libraries-and-apis_jp,    1
+API,   intermediate-libraries-and-apis_jp,   1
+ライブラリ,   intermediate-libraries-and-apis_jp,    1
+package,   intermediate-libraries-and-apis_jp,     1
+ワイルドカードインポート,   intermediate-libraries-and-apis_jp,     2
+importキーワード,   intermediate-libraries-and-apis_jp,     2
+コンパニオンオブジェクト,   intermediate-libraries-and-apis_jp,     2
+Kotlinライブラリ,   intermediate-libraries-and-apis_jp,     3
+kotlinx,   intermediate-libraries-and-apis_jp,     3
+オプトイン,   intermediate-libraries-and-apis_jp,     4
+OptIn,   intermediate-libraries-and-apis_jp,     4
+@OptIn,   intermediate-libraries-and-apis_jp,     4
+@ExperimentalUnsignedTypes,   intermediate-libraries-and-apis_jp,     4
+,   intermediate-libraries-and-apis_jp,     
+,   intermediate-libraries-and-apis_jp,     
+
+
+## 
