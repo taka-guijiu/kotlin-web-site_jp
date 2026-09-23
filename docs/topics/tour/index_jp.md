@@ -40,14 +40,6 @@ DSL,   intermediate-lambdas-receiver_jp   ,   2
 型安全なビルダー,   intermediate-lambdas-receiver_jp   ,   4
 ,   intermediate-lambdas-receiver_jp   ,   
 ,   intermediate-lambdas-receiver_jp   ,   
-,   intermediate-lambdas-receiver_jp   ,   
-,   intermediate-lambdas-receiver_jp   ,   
-,   intermediate-lambdas-receiver_jp   ,   
-,   intermediate-lambdas-receiver_jp   ,   
-,   intermediate-lambdas-receiver_jp   ,   
-,   intermediate-lambdas-receiver_jp   ,   
-
-
 
 
 ## intermediate-classes-interfaces_jp
@@ -58,10 +50,13 @@ DSL,   intermediate-lambdas-receiver_jp   ,   2
 クラスの継承,   intermediate-classes-interfaces,    1
 Anyクラス,   intermediate-classes-interfaces,   1
 Abstractクラス,   intermediate-classes-interfaces,  2
-抽象クラス      ,   intermediate-classes-interfaces,    2
+抽象クラス,   intermediate-classes-interfaces,    2
+抽象関数,   intermediate-classes-interfaces,    2
+抽象プロパティ      ,   intermediate-classes-interfaces,    2
 実装,   intermediate-classes-interfaces,    2
 インプリメント,   intermediate-classes-interfaces,  2
 abstractキーワード,   intermediate-classes-interfaces,    2
+派生クラス,   intermediate-classes-interfaces,    3
 overrideキーワード,   intermediate-classes-interfaces,    3
 オーバーライド,   intermediate-classes-interfaces,    3
 インターフェース,   intermediate-classes-interfaces,    4
