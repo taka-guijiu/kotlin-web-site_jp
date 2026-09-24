@@ -138,6 +138,7 @@ copy()関数,   classes_jp,     4
 
 
 ## null-safety_jp
+
 nullセーフティ,   null-safety_jp,     1
 null Safty,   null-safety_jp,     1
 null安全,   null-safety_jp,     1
@@ -153,11 +154,6 @@ null許容型,   null-safety_jp,     1
 Elvis演算子,   null-safety_jp,     3
 ,   null-safety_jp,     
 ,   null-safety_jp,     
-,   null-safety_jp,     
-,   null-safety_jp,     
-,   null-safety_jp,     
-
-
 
 
 ## intermediate-extension-functions_jp
