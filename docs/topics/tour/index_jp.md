@@ -89,6 +89,31 @@ itelator,   control-flow_jp,
 ,   control-flow_jp,    
 
 
+## kotlin-tour-functions_jp
+fun,   kotlin-tour-functions_jp,   1
+return,   kotlin-tour-functions_jp,   1,4
+名前付き引数,   kotlin-tour-functions_jp,   2
+パラメータ,   kotlin-tour-functions_jp,   2
+パラメータのデフォルト値,   kotlin-tour-functions_jp,   2
+戻り値のない関数,   kotlin-tour-functions_jp,   3
+単一式関数,   kotlin-tour-functions_jp,   3
+代入演算子,   kotlin-tour-functions_jp,   4
+ラムダ式,   kotlin-tour-functions_jp,   7
+filter()（Listの関数）,   kotlin-tour-functions_jp,   9
+map()（Listの関数）,   kotlin-tour-functions_jp,   10
+関数型,   kotlin-tour-functions_jp,   10
+uppercase()（Stringの関数）,   kotlin-tour-functions_jp,   11
+関数型からの戻り値,   kotlin-tour-functions_jp,   11
+トレイリングラムダ,   kotlin-tour-functions_jp,   12
+末尾のラムダ,   kotlin-tour-functions_jp,   12
+匿名関数,   kotlin-tour-functions_jp,   12
+,   kotlin-tour-functions_jp,   
+,   kotlin-tour-functions_jp,   
+
+
+
+## 
+
 
 
 ## intermediate-extension-functions_jp
