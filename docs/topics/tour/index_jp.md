@@ -89,7 +89,7 @@ itelator,   control-flow_jp,
 ,   control-flow_jp,    
 
 
-## kotlin-tour-functions_jp
+## functions_jp
 fun,   kotlin-tour-functions_jp,   1
 return,   kotlin-tour-functions_jp,   1,4
 名前付き引数,   kotlin-tour-functions_jp,   2
@@ -112,7 +112,31 @@ uppercase()（Stringの関数）,   kotlin-tour-functions_jp,   11
 
 
 
-## 
+## classes_jp
+class,   classes_jp,    1
+クラス,   classes_jp,     1
+Property,   classes_jp,     1
+プロパティ,   classes_jp,     1
+val,   classes_jp,     1
+var,   classes_jp,     1
+クラスヘッダ,   classes_jp,     1
+コンストラクタ,   classes_jp,     2
+インスタンス,   classes_jp,     2
+メンバ関数,   classes_jp,     3
+data class,   classes_jp,     3
+データクラス,   classes_jp,    3 
+データclass,   classes_jp,     3
+dataキーワード,   classes_jp,     3
+toString()関数,   classes_jp,     4
+equals()関数,   classes_jp,     4
+copy()関数,   classes_jp,     4
+メンバー関数,   classes_jp,     3
+インスタンスの比較,   classes_jp,     4
+インスタンスのコピー,   classes_jp,     5
+,   classes_jp,     
+,   classes_jp,     
+
+
 
 
 
