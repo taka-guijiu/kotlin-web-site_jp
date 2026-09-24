@@ -69,8 +69,25 @@ keys（Mapのプロパティ）,   collections_jp,     8
 values（Mapのプロパティ）,   collections_jp,     8
 ,   collections_jp,     
 ,   collections_jp,     
-,   collections_jp,     
-,   collections_jp,     
+
+
+## control-flow_jp
+if,   control-flow_jp,    1
+when,   control-flow_jp,   1,2 
+三項演算子,   control-flow_jp,    1
+?・・・:,   control-flow_jp,    1
+->,   control-flow_jp,    2
+Range,   control-flow_jp,    6
+範囲,   control-flow_jp,    6
+..,   control-flow_jp,    6
+downto,   control-flow_jp,    6
+step,   control-flow_jp,    6
+for,   control-flow_jp,    7
+while,   control-flow_jp,    7
+do-while,   control-flow_jp,    8
+itelator,   control-flow_jp,    
+,   control-flow_jp,    
+
 
 
 
