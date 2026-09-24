@@ -137,6 +137,26 @@ copy()関数,   classes_jp,     4
 ,   classes_jp,     
 
 
+## null-safety_jp
+nullセーフティ,   null-safety_jp,     1
+null Safty,   null-safety_jp,     1
+null安全,   null-safety_jp,     1
+null,   null-safety_jp,     1
+null許容型,   null-safety_jp,     1
+ヌル,   null-safety_jp,     1
+?,   null-safety_jp,     1
+セーフコール演算子,   null-safety_jp,     2
+?.,   null-safety_jp,     2
+スロー,   null-safety_jp,     3
+エルビス演算子,   null-safety_jp,     3
+?:演算子,   null-safety_jp,     3
+Elvis演算子,   null-safety_jp,     3
+,   null-safety_jp,     
+,   null-safety_jp,     
+,   null-safety_jp,     
+,   null-safety_jp,     
+,   null-safety_jp,     
+
 
 
 
